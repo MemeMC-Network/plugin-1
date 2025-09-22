@@ -1,6 +1,7 @@
 package me.mememc.network.survivalcore.listeners;
 
 import me.mememc.network.survivalcore.SurvivalCore;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -121,6 +122,7 @@ public class PlayerListener implements Listener {
             
             if (currentPage > 1) {
                 plugin.getShopManager().openCategoryShop(player, category, currentPage - 1);
+                playNavigationSound(player);
             }
         }
     }
@@ -134,11 +136,21 @@ public class PlayerListener implements Listener {
             int currentPage = Integer.parseInt(pagePart.replace(")", ""));
             
             plugin.getShopManager().openCategoryShop(player, category, currentPage + 1);
+            playNavigationSound(player);
         }
     }
     
     private void handleCategoriesMenu(org.bukkit.entity.Player player) {
         plugin.getShopManager().openCategoriesMenu(player);
+        playNavigationSound(player);
+    }
+    
+    private void playNavigationSound(org.bukkit.entity.Player player) {
+        try {
+            player.playSound(player.getLocation(), org.bukkit.Sound.UI_BUTTON_CLICK, 1.0f, 1.0f);
+        } catch (Exception e) {
+            // Sound not available, continue silently
+        }
     }
     
     private void handleShopItemClick(org.bukkit.entity.Player player, String title, int slot, boolean isLeftClick) {

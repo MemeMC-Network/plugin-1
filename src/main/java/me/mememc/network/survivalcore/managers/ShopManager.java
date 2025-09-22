@@ -3,6 +3,7 @@ package me.mememc.network.survivalcore.managers;
 import me.mememc.network.survivalcore.SurvivalCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -105,11 +106,25 @@ public class ShopManager {
      * Open a specific category shop
      */
     public void openCategoryShop(Player player, String category, int page) {
+        if (player == null) {
+            plugin.getLogger().warning("Cannot open shop for null player");
+            return;
+        }
+        
+        if (category == null || category.trim().isEmpty()) {
+            player.sendMessage("§cInvalid shop category!");
+            return;
+        }
+        
+        if (page < 1) {
+            page = 1;
+        }
+        
         ConfigurationSection categorySection = plugin.getConfigManager().getShopConfig()
             .getConfigurationSection("categories." + category);
         
         if (categorySection == null) {
-            player.sendMessage("§cShop category not found!");
+            player.sendMessage("§cShop category '" + category + "' not found!");
             return;
         }
         
@@ -118,6 +133,13 @@ public class ShopManager {
                       + " - " + displayName + " (Page " + page + ")";
         
         int size = plugin.getConfigManager().getShopConfig().getInt("gui.size", 54);
+        
+        // Validate inventory size
+        if (size % 9 != 0 || size < 9 || size > 54) {
+            size = 54;
+            plugin.getLogger().warning("Invalid shop GUI size in config, using default (54)");
+        }
+        
         Inventory inventory = Bukkit.createInventory(null, size, title);
         
         // Load items for this page
@@ -136,8 +158,17 @@ public class ShopManager {
                     }
                 } catch (NumberFormatException e) {
                     // Skip invalid slot numbers
+                    plugin.getLogger().warning("Invalid slot number in shop config: " + key);
                 }
             }
+        } else if (page == 1) {
+            // If page 1 doesn't exist, show a warning
+            player.sendMessage("§cNo items found in category '" + category + "'!");
+            return;
+        } else {
+            // If page doesn't exist and it's not page 1, go to page 1
+            openCategoryShop(player, category, 1);
+            return;
         }
         
         // Add navigation items
@@ -350,8 +381,42 @@ public class ShopManager {
      * Process a shop transaction (placeholder for future economy integration)
      */
     public boolean processBuy(Player player, String category, int page, int slot) {
-        // TODO: Implement actual buying logic with economy integration
-        player.sendMessage("§aBuy functionality will be implemented with economy integration!");
+        if (player == null) return false;
+        
+        // Get item information from config
+        ConfigurationSection categorySection = plugin.getConfigManager().getShopConfig()
+            .getConfigurationSection("categories." + category);
+        
+        if (categorySection != null) {
+            ConfigurationSection pageSection = categorySection.getConfigurationSection("page-" + page);
+            if (pageSection != null) {
+                ConfigurationSection itemSection = pageSection.getConfigurationSection(String.valueOf(slot + 1));
+                if (itemSection != null) {
+                    String itemName = itemSection.getString("name", "Unknown Item");
+                    double buyPrice = itemSection.getDouble("buy-price", -1);
+                    int buyAmount = itemSection.getInt("buy-amount", 1);
+                    
+                    if (buyPrice > 0) {
+                        // Check if player has enough money (placeholder)
+                        double playerBalance = getPlayerBalance(player);
+                        if (playerBalance >= buyPrice) {
+                            player.sendMessage("§aPurchased " + buyAmount + "x " + itemName.replace("&", "§") + " for §6$" + buyPrice);
+                            player.sendMessage("§7(Transaction will be processed when economy integration is added)");
+                            playShopSound(player, "buy");
+                        } else {
+                            player.sendMessage("§cYou don't have enough money! Need §6$" + buyPrice + "§c, but you only have §6$" + String.format("%.2f", playerBalance));
+                            playShopSound(player, "click");
+                        }
+                    } else {
+                        player.sendMessage("§cThis item is not available for purchase!");
+                        playShopSound(player, "click");
+                    }
+                } else {
+                    player.sendMessage("§cItem not found in shop configuration!");
+                }
+            }
+        }
+        
         return true;
     }
     
@@ -359,8 +424,35 @@ public class ShopManager {
      * Process a shop sell transaction (placeholder for future economy integration)
      */
     public boolean processSell(Player player, String category, int page, int slot) {
-        // TODO: Implement actual selling logic with economy integration
-        player.sendMessage("§cSell functionality will be implemented with economy integration!");
+        if (player == null) return false;
+        
+        // Get item information from config
+        ConfigurationSection categorySection = plugin.getConfigManager().getShopConfig()
+            .getConfigurationSection("categories." + category);
+        
+        if (categorySection != null) {
+            ConfigurationSection pageSection = categorySection.getConfigurationSection("page-" + page);
+            if (pageSection != null) {
+                ConfigurationSection itemSection = pageSection.getConfigurationSection(String.valueOf(slot + 1));
+                if (itemSection != null) {
+                    String itemName = itemSection.getString("name", "Unknown Item");
+                    double sellPrice = itemSection.getDouble("sell-price", -1);
+                    int sellAmount = itemSection.getInt("sell-amount", 1);
+                    
+                    if (sellPrice > 0) {
+                        player.sendMessage("§aSold " + sellAmount + "x " + itemName.replace("&", "§") + " for §6$" + sellPrice);
+                        player.sendMessage("§7(Transaction will be processed when economy integration is added)");
+                        playShopSound(player, "sell");
+                    } else {
+                        player.sendMessage("§cThis item cannot be sold to the shop!");
+                        playShopSound(player, "click");
+                    }
+                } else {
+                    player.sendMessage("§cItem not found in shop configuration!");
+                }
+            }
+        }
+        
         return true;
     }
     
@@ -369,13 +461,38 @@ public class ShopManager {
      */
     public double getPlayerBalance(Player player) {
         // TODO: Implement with economy plugin integration
-        return 1000.0; // Placeholder balance
+        return plugin.getConfigManager().getShopConfig().getDouble("default-balance", 1000.0);
+    }
+    
+    /**
+     * Check if a shop feature is enabled
+     */
+    private boolean isFeatureEnabled(String feature) {
+        return plugin.getConfigManager().getShopConfig().getBoolean("features.enable-" + feature, true);
+    }
+    
+    /**
+     * Play a shop sound effect
+     */
+    private void playShopSound(Player player, String soundType) {
+        if (!isFeatureEnabled("sounds")) return;
+        
+        try {
+            String soundName = plugin.getConfigManager().getShopConfig().getString("gui." + soundType + "-sound", "UI_BUTTON_CLICK");
+            Sound sound = Sound.valueOf(soundName);
+            player.playSound(player.getLocation(), sound, 1.0f, 1.0f);
+        } catch (Exception e) {
+            // Sound not found or not available, silently continue
+            plugin.getLogger().fine("Could not play shop sound: " + soundType);
+        }
     }
     
     /**
      * Add a balance display item to the shop inventory
      */
     private void addBalanceDisplay(Inventory inventory, Player player) {
+        if (!isFeatureEnabled("balance-display")) return;
+        
         ItemStack balance = new ItemStack(Material.GOLD_INGOT);
         ItemMeta balanceMeta = balance.getItemMeta();
         if (balanceMeta != null) {
