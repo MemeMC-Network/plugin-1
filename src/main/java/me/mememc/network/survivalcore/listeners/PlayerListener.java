@@ -19,11 +19,13 @@ public class PlayerListener implements Listener {
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        // TODO: Handle player join events
+        // Currently no specific actions needed on join
+        // Could add welcome messages, data loading, etc. in the future
     }
     
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        // TODO: Handle player quit events (cleanup TPA requests, etc.)
+        // Clean up TPA requests when player leaves
+        plugin.getTpaManager().removeAllRequests(event.getPlayer());
     }
 }
