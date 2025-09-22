@@ -1,0 +1,104 @@
+# SurvivalCore-V2 Messages Configuration
+# Color codes: Use & for color codes (e.g., &a for green, &c for red)
+# Placeholders: Use {player}, {amount}, {location}, etc.
+
+# General Messages
+general:
+  prefix: "&8[&6SurvivalCore&8]&r "
+  no-permission: "{prefix}&cYou don't have permission to use this command!"
+  player-only: "{prefix}&cThis command can only be used by players!"
+  invalid-player: "{prefix}&cPlayer '{player}' not found or is offline!"
+  invalid-usage: "{prefix}&cUsage: {usage}"
+  feature-disabled: "{prefix}&cThis feature is currently disabled!"
+  cooldown: "{prefix}&cYou must wait {time} before using this command again!"
+  teleporting: "{prefix}&7Teleporting in {delay} seconds... Don't move!"
+  teleport-cancelled: "{prefix}&cTeleportation cancelled because you moved!"
+  no-economy: "{prefix}&cEconomy plugin not found! This feature requires Vault."
+  insufficient-funds: "{prefix}&cYou need {amount} to use this command!"
+  economy-transaction: "{prefix}&aCharged {amount} from your account."
+
+# RTP Messages
+rtp:
+  success: "{prefix}&aTeleported to a random location! &7({x}, {y}, {z})"
+  no-safe-location: "{prefix}&cCould not find a safe location to teleport you to. Try again!"
+  world-not-allowed: "{prefix}&cRandom teleport is not allowed in this world!"
+  already-teleporting: "{prefix}&cYou are already being teleported!"
+
+# TPA Messages
+tpa:
+  request-sent: "{prefix}&aTeleport request sent to &e{player}&a!"
+  request-received: "{prefix}&e{player} &7wants to teleport to you. &a/tpaccept &7or &c/tpdeny"
+  request-received-here: "{prefix}&e{player} &7wants you to teleport to them. &a/tpaccept &7or &c/tpdeny"
+  no-pending-requests: "{prefix}&cYou have no pending teleport requests!"
+  request-accepted: "{prefix}&aYou accepted &e{player}'s &ateleport request!"
+  request-accepted-sender: "{prefix}&e{player} &aaccepted your teleport request!"
+  request-denied: "{prefix}&cYou denied &e{player}'s &cteleport request!"
+  request-denied-sender: "{prefix}&e{player} &cdenied your teleport request!"
+  request-expired: "{prefix}&cYour teleport request to &e{player} &chas expired!"
+  request-already-exists: "{prefix}&cYou already have a pending request to this player!"
+  cannot-request-self: "{prefix}&cYou cannot send a teleport request to yourself!"
+  target-has-requests-disabled: "{prefix}&c{player} has teleport requests disabled!"
+
+# Home Messages
+home:
+  teleported: "{prefix}&aTeleported to home &e{home}&a!"
+  set: "{prefix}&aHome &e{home} &ahas been set!"
+  deleted: "{prefix}&aHome &e{home} &ahas been deleted!"
+  not-found: "{prefix}&cHome &e{home} &cnot found!"
+  max-homes-reached: "{prefix}&cYou have reached the maximum number of homes ({max})!"
+  list-header: "{prefix}&aYour homes:"
+  list-item: "&7- &e{home} &7in &a{world} &7at &b{x}, {y}, {z}"
+  no-homes: "{prefix}&cYou don't have any homes set!"
+  already-exists: "{prefix}&cYou already have a home named &e{home}&c!"
+  invalid-name: "{prefix}&cInvalid home name! Use only letters, numbers, and underscores."
+
+# Warp Messages
+warp:
+  teleported: "{prefix}&aTeleported to warp &e{warp}&a!"
+  created: "{prefix}&aWarp &e{warp} &ahas been created!"
+  deleted: "{prefix}&aWarp &e{warp} &ahas been deleted!"
+  not-found: "{prefix}&cWarp &e{warp} &cnot found!"
+  already-exists: "{prefix}&cWarp &e{warp} &calready exists!"
+  list-header: "{prefix}&aAvailable warps:"
+  list-item: "&7- &e{warp} &7in &a{world} &7at &b{x}, {y}, {z}"
+  no-warps: "{prefix}&cNo warps available!"
+  invalid-name: "{prefix}&cInvalid warp name! Use only letters, numbers, and underscores."
+
+# Player Warp Messages
+pwarp:
+  teleported: "{prefix}&aTeleported to player warp &e{warp} &aowned by &e{owner}&a!"
+  created: "{prefix}&aPlayer warp &e{warp} &ahas been created!"
+  deleted: "{prefix}&aPlayer warp &e{warp} &ahas been deleted!"
+  not-found: "{prefix}&cPlayer warp &e{warp} &cnot found!"
+  not-owner: "{prefix}&cYou don't own the player warp &e{warp}&c!"
+  max-warps-reached: "{prefix}&cYou have reached the maximum number of player warps ({max})!"
+  already-exists: "{prefix}&cYou already have a player warp named &e{warp}&c!"
+  list-header: "{prefix}&aAvailable player warps:"
+  list-item: "&7- &e{warp} &7by &a{owner} &7in &b{world}"
+  list-own-item: "&7- &e{warp} &7in &a{world} &7at &b{x}, {y}, {z}"
+  no-warps: "{prefix}&cNo player warps available!"
+  no-own-warps: "{prefix}&cYou don't have any player warps!"
+  invalid-name: "{prefix}&cInvalid warp name! Use only letters, numbers, and underscores."
+
+# Shop Messages
+shop:
+  opened: "{prefix}&aOpened the shop!"
+  category-not-found: "{prefix}&cShop category '{category}' not found!"
+  item-bought: "{prefix}&aYou bought &e{amount}x {item} &afor &e{price}&a!"
+  item-sold: "{prefix}&aYou sold &e{amount}x {item} &afor &e{price}&a!"
+  not-enough-money: "{prefix}&cYou don't have enough money! You need &e{price}&c!"
+  not-enough-items: "{prefix}&cYou don't have enough items to sell!"
+  inventory-full: "{prefix}&cYour inventory is full!"
+  cannot-buy: "{prefix}&cThis item cannot be purchased!"
+  cannot-sell: "{prefix}&cThis item cannot be sold!"
+  invalid-amount: "{prefix}&cInvalid amount! Please specify a number between 1 and 64."
+
+# Admin Messages
+admin:
+  reloaded: "{prefix}&aConfiguration reloaded successfully!"
+  reload-error: "{prefix}&cError occurred while reloading configuration!"
+  info-header: "{prefix}&e--- SurvivalCore-V2 Info ---"
+  info-version: "&7Version: &a{version}"
+  info-author: "&7Author: &aMemeMC Network"
+  info-database: "&7Database: &a{database}"
+  info-players: "&7Online Players: &a{players}"

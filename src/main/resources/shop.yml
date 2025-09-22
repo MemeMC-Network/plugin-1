@@ -1,0 +1,442 @@
+# SurvivalCore-V2 Shop Configuration
+# Configure shop categories, items, prices, and layout
+
+# Shop GUI Settings
+gui:
+  title: "&6&lSurvival Shop"
+  size: 54
+  
+# Category Navigation Items
+navigation:
+  # Previous page item
+  previous-page:
+    material: ARROW
+    name: "&c&lPrevious Page"
+    lore:
+      - "&7Click to go to the previous page"
+    slot: 45
+  
+  # Next page item
+  next-page:
+    material: ARROW
+    name: "&a&lNext Page"
+    lore:
+      - "&7Click to go to the next page"
+    slot: 53
+  
+  # Category selector item
+  categories:
+    material: COMPASS
+    name: "&e&lCategories"
+    lore:
+      - "&7Click to view all categories"
+    slot: 49
+  
+  # Close shop item
+  close:
+    material: BARRIER
+    name: "&c&lClose Shop"
+    lore:
+      - "&7Click to close the shop"
+    slot: 50
+
+# Shop Categories
+categories:
+  
+  # Building Blocks Category
+  blocks:
+    display-name: "&6Building Blocks"
+    icon: STONE
+    description:
+      - "&7Essential building materials"
+      - "&7for your constructions"
+    
+    # Page 1 Items
+    page-1:
+      1:
+        material: STONE
+        name: "&fStone"
+        buy-price: 2.0
+        sell-price: 1.0
+        buy-amount: 64
+        sell-amount: 64
+        lore:
+          - "&7Basic building stone"
+          - "&aLeft-click to buy"
+          - "&cRight-click to sell"
+      
+      2:
+        material: COBBLESTONE
+        name: "&fCobblestone"
+        buy-price: 1.5
+        sell-price: 0.75
+        buy-amount: 64
+        sell-amount: 64
+      
+      3:
+        material: DIRT
+        name: "&fDirt"
+        buy-price: 0.5
+        sell-price: 0.25
+        buy-amount: 64
+        sell-amount: 64
+      
+      4:
+        material: GRASS_BLOCK
+        name: "&fGrass Block"
+        buy-price: 1.0
+        sell-price: 0.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      5:
+        material: SAND
+        name: "&fSand"
+        buy-price: 1.0
+        sell-price: 0.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      6:
+        material: GRAVEL
+        name: "&fGravel"
+        buy-price: 1.0
+        sell-price: 0.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      7:
+        material: OAK_LOG
+        name: "&fOak Log"
+        buy-price: 3.0
+        sell-price: 1.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      8:
+        material: OAK_PLANKS
+        name: "&fOak Planks"
+        buy-price: 2.0
+        sell-price: 1.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      9:
+        material: GLASS
+        name: "&fGlass"
+        buy-price: 4.0
+        sell-price: 2.0
+        buy-amount: 64
+        sell-amount: 64
+    
+    # Page 2 Items
+    page-2:
+      1:
+        material: BRICK
+        name: "&fBricks"
+        buy-price: 8.0
+        sell-price: 4.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      2:
+        material: STONE_BRICKS
+        name: "&fStone Bricks"
+        buy-price: 6.0
+        sell-price: 3.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      3:
+        material: SMOOTH_STONE
+        name: "&fSmooth Stone"
+        buy-price: 4.0
+        sell-price: 2.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      4:
+        material: QUARTZ_BLOCK
+        name: "&fQuartz Block"
+        buy-price: 20.0
+        sell-price: 10.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      5:
+        material: OBSIDIAN
+        name: "&fObsidian"
+        buy-price: 50.0
+        sell-price: 25.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      6:
+        material: IRON_BLOCK
+        name: "&fIron Block"
+        buy-price: 450.0
+        sell-price: 225.0
+        buy-amount: 1
+        sell-amount: 1
+      
+      7:
+        material: GOLD_BLOCK
+        name: "&fGold Block"
+        buy-price: 900.0
+        sell-price: 450.0
+        buy-amount: 1
+        sell-amount: 1
+      
+      8:
+        material: DIAMOND_BLOCK
+        name: "&fDiamond Block"
+        buy-price: 4500.0
+        sell-price: 2250.0
+        buy-amount: 1
+        sell-amount: 1
+      
+      9:
+        material: EMERALD_BLOCK
+        name: "&fEmerald Block"
+        buy-price: 9000.0
+        sell-price: 4500.0
+        buy-amount: 1
+        sell-amount: 1
+    
+    # Page 3 Items
+    page-3:
+      1:
+        material: TERRACOTTA
+        name: "&fTerracotta"
+        buy-price: 5.0
+        sell-price: 2.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      2:
+        material: CONCRETE
+        name: "&fConcrete"
+        buy-price: 8.0
+        sell-price: 4.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      3:
+        material: SANDSTONE
+        name: "&fSandstone"
+        buy-price: 3.0
+        sell-price: 1.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      4:
+        material: RED_SANDSTONE
+        name: "&fRed Sandstone"
+        buy-price: 3.0
+        sell-price: 1.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      5:
+        material: PRISMARINE
+        name: "&fPrismarine"
+        buy-price: 15.0
+        sell-price: 7.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      6:
+        material: END_STONE
+        name: "&fEnd Stone"
+        buy-price: 10.0
+        sell-price: 5.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      7:
+        material: PURPUR_BLOCK
+        name: "&fPurpur Block"
+        buy-price: 25.0
+        sell-price: 12.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      8:
+        material: NETHER_BRICKS
+        name: "&fNether Bricks"
+        buy-price: 8.0
+        sell-price: 4.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      9:
+        material: BLACKSTONE
+        name: "&fBlackstone"
+        buy-price: 6.0
+        sell-price: 3.0
+        buy-amount: 64
+        sell-amount: 64
+
+  # Tools & Weapons Category
+  tools:
+    display-name: "&cTools & Weapons"
+    icon: DIAMOND_SWORD
+    description:
+      - "&7Essential tools and weapons"
+      - "&7for survival and combat"
+    
+    # Page 1 - Basic Tools
+    page-1:
+      1:
+        material: WOODEN_SWORD
+        name: "&fWooden Sword"
+        buy-price: 5.0
+        sell-price: 2.5
+        buy-amount: 1
+        sell-amount: 1
+      
+      2:
+        material: WOODEN_PICKAXE
+        name: "&fWooden Pickaxe"
+        buy-price: 8.0
+        sell-price: 4.0
+        buy-amount: 1
+        sell-amount: 1
+      
+      3:
+        material: STONE_SWORD
+        name: "&fStone Sword"
+        buy-price: 15.0
+        sell-price: 7.5
+        buy-amount: 1
+        sell-amount: 1
+      
+      4:
+        material: STONE_PICKAXE
+        name: "&fStone Pickaxe"
+        buy-price: 20.0
+        sell-price: 10.0
+        buy-amount: 1
+        sell-amount: 1
+      
+      5:
+        material: IRON_SWORD
+        name: "&fIron Sword"
+        buy-price: 75.0
+        sell-price: 37.5
+        buy-amount: 1
+        sell-amount: 1
+      
+      6:
+        material: IRON_PICKAXE
+        name: "&fIron Pickaxe"
+        buy-price: 100.0
+        sell-price: 50.0
+        buy-amount: 1
+        sell-amount: 1
+      
+      7:
+        material: BOW
+        name: "&fBow"
+        buy-price: 30.0
+        sell-price: 15.0
+        buy-amount: 1
+        sell-amount: 1
+      
+      8:
+        material: ARROW
+        name: "&fArrows"
+        buy-price: 1.0
+        sell-price: 0.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      9:
+        material: SHIELD
+        name: "&fShield"
+        buy-price: 50.0
+        sell-price: 25.0
+        buy-amount: 1
+        sell-amount: 1
+
+  # Food Category
+  food:
+    display-name: "&aFood & Farming"
+    icon: BREAD
+    description:
+      - "&7Food items and farming supplies"
+      - "&7to keep you well-fed"
+    
+    # Page 1 - Basic Food
+    page-1:
+      1:
+        material: BREAD
+        name: "&fBread"
+        buy-price: 5.0
+        sell-price: 2.5
+        buy-amount: 16
+        sell-amount: 16
+      
+      2:
+        material: COOKED_BEEF
+        name: "&fCooked Beef"
+        buy-price: 8.0
+        sell-price: 4.0
+        buy-amount: 16
+        sell-amount: 16
+      
+      3:
+        material: COOKED_PORKCHOP
+        name: "&fCooked Porkchop"
+        buy-price: 8.0
+        sell-price: 4.0
+        buy-amount: 16
+        sell-amount: 16
+      
+      4:
+        material: COOKED_CHICKEN
+        name: "&fCooked Chicken"
+        buy-price: 6.0
+        sell-price: 3.0
+        buy-amount: 16
+        sell-amount: 16
+      
+      5:
+        material: APPLE
+        name: "&fApple"
+        buy-price: 3.0
+        sell-price: 1.5
+        buy-amount: 16
+        sell-amount: 16
+      
+      6:
+        material: GOLDEN_APPLE
+        name: "&fGolden Apple"
+        buy-price: 100.0
+        sell-price: 50.0
+        buy-amount: 1
+        sell-amount: 1
+      
+      7:
+        material: WHEAT_SEEDS
+        name: "&fWheat Seeds"
+        buy-price: 1.0
+        sell-price: 0.5
+        buy-amount: 64
+        sell-amount: 64
+      
+      8:
+        material: WHEAT
+        name: "&fWheat"
+        buy-price: 2.0
+        sell-price: 1.0
+        buy-amount: 64
+        sell-amount: 64
+      
+      9:
+        material: CARROT
+        name: "&fCarrot"
+        buy-price: 1.5
+        sell-price: 0.75
+        buy-amount: 64
+        sell-amount: 64

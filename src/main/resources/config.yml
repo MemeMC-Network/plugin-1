@@ -1,0 +1,137 @@
+# SurvivalCore-V2 Configuration
+# Created by MemeMC Network
+# For support visit: https://github.com/MemeMC-Network/plugin-1
+
+# Database Configuration
+database:
+  # Database type: sqlite or mysql
+  type: sqlite
+  
+  # MySQL settings (only used if type is mysql)
+  mysql:
+    host: localhost
+    port: 3306
+    database: survivalcore
+    username: root
+    password: ""
+
+# Random Teleport (RTP) Settings
+rtp:
+  enabled: true
+  # Cooldown in seconds
+  cooldown: 300
+  # Maximum distance from spawn (in blocks)
+  max-distance: 10000
+  # Minimum distance from spawn (in blocks)
+  min-distance: 100
+  # Maximum attempts to find safe location
+  max-attempts: 50
+  # Worlds where RTP is allowed
+  allowed-worlds:
+    - world
+    - world_nether
+    - world_the_end
+  # Blocks that are considered unsafe for teleportation
+  unsafe-blocks:
+    - LAVA
+    - FIRE
+    - MAGMA_BLOCK
+    - SWEET_BERRY_BUSH
+    - WITHER_ROSE
+    - CACTUS
+
+# Teleport Accept (TPA) Settings
+tpa:
+  enabled: true
+  # Cooldown between TPA requests (in seconds)
+  cooldown: 10
+  # How long a request stays valid (in seconds)
+  timeout: 60
+  # Teleport delay (in seconds)
+  teleport-delay: 3
+  # Cancel teleport if player moves
+  cancel-on-move: true
+
+# Home System Settings
+homes:
+  enabled: true
+  # Maximum homes per player (can be overridden with permissions)
+  max-homes: 3
+  # Cooldown between home teleports (in seconds)
+  cooldown: 10
+  # Teleport delay (in seconds)
+  teleport-delay: 3
+  # Cancel teleport if player moves
+  cancel-on-move: true
+  # Cost to set a home (requires Vault and economy plugin)
+  set-cost: 0.0
+  # Cost to teleport to home
+  teleport-cost: 0.0
+
+# Warp System Settings
+warps:
+  enabled: true
+  # Cooldown between warp teleports (in seconds)
+  cooldown: 10
+  # Teleport delay (in seconds)
+  teleport-delay: 3
+  # Cancel teleport if player moves
+  cancel-on-move: true
+  # Cost to teleport to warp
+  teleport-cost: 0.0
+
+# Player Warp System Settings
+player-warps:
+  enabled: true
+  # Maximum player warps per player
+  max-warps: 2
+  # Cooldown between player warp teleports (in seconds)
+  cooldown: 10
+  # Teleport delay (in seconds)
+  teleport-delay: 3
+  # Cancel teleport if player moves
+  cancel-on-move: true
+  # Cost to create a player warp
+  create-cost: 100.0
+  # Cost to teleport to player warp
+  teleport-cost: 10.0
+
+# Shop System Settings
+shop:
+  enabled: true
+  # Shop GUI title
+  title: "&6&lSurvival Shop"
+  # Items per page
+  items-per-page: 45
+  # Enable buying from shop
+  enable-buying: true
+  # Enable selling to shop
+  enable-selling: true
+  # Sell price multiplier (percentage of buy price)
+  sell-multiplier: 0.5
+
+# General Settings
+general:
+  # Check for updates on startup
+  check-updates: true
+  # Enable debug mode
+  debug: false
+  # Plugin prefix for messages
+  prefix: "&8[&6SurvivalCore&8]&r "
+  # Date format for timestamps
+  date-format: "yyyy-MM-dd HH:mm:ss"
+
+# Permission-based home limits
+# Players with higher permissions get more homes
+home-limits:
+  survivalcore.homes.1: 1
+  survivalcore.homes.5: 5
+  survivalcore.homes.10: 10
+  survivalcore.homes.unlimited: -1
+
+# Permission-based player warp limits
+pwarp-limits:
+  survivalcore.pwarps.1: 1
+  survivalcore.pwarps.3: 3
+  survivalcore.pwarps.5: 5
+  survivalcore.pwarps.unlimited: -1
