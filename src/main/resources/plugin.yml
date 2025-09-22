@@ -1,0 +1,279 @@
+name: SurvivalCore-V2
+version: 2.0.0
+main: me.mememc.network.survivalcore.SurvivalCore
+api-version: 1.20
+author: MemeMC Network
+description: Comprehensive survival server plugin with RTP, TPA, Homes, Warps, and Shop systems
+website: https://github.com/MemeMC-Network/plugin-1
+
+commands:
+  # RTP Commands
+  rtp:
+    description: Randomly teleport to a safe location
+    usage: /rtp
+    aliases: [randomtp, randomteleport]
+    permission: survivalcore.rtp.use
+  
+  # TPA Commands
+  tpa:
+    description: Send a teleport request to a player
+    usage: /tpa <player>
+    aliases: [tpask]
+    permission: survivalcore.tpa.send
+  
+  tpaccept:
+    description: Accept a teleport request
+    usage: /tpaccept [player]
+    aliases: [tpaaccept, tpyes]
+    permission: survivalcore.tpa.accept
+  
+  tpdeny:
+    description: Deny a teleport request
+    usage: /tpdeny [player]
+    aliases: [tpadeny, tpno]
+    permission: survivalcore.tpa.deny
+  
+  tpahere:
+    description: Request a player to teleport to you
+    usage: /tpahere <player>
+    aliases: [tpaskhere]
+    permission: survivalcore.tpa.here
+  
+  # Home Commands
+  home:
+    description: Teleport to your home
+    usage: /home [name]
+    permission: survivalcore.home.use
+  
+  sethome:
+    description: Set a home location
+    usage: /sethome [name]
+    permission: survivalcore.home.set
+  
+  delhome:
+    description: Delete a home location
+    usage: /delhome <name>
+    aliases: [deletehome, removehome]
+    permission: survivalcore.home.delete
+  
+  homes:
+    description: List all your homes
+    usage: /homes
+    aliases: [listhomes]
+    permission: survivalcore.home.list
+  
+  # Warp Commands
+  warp:
+    description: Teleport to a server warp
+    usage: /warp <name>
+    permission: survivalcore.warp.use
+  
+  warps:
+    description: List all available warps
+    usage: /warps
+    aliases: [listwarps]
+    permission: survivalcore.warp.list
+  
+  setwarp:
+    description: Create a server warp
+    usage: /setwarp <name>
+    permission: survivalcore.warp.set
+  
+  delwarp:
+    description: Delete a server warp
+    usage: /delwarp <name>
+    aliases: [deletewarp, removewarp]
+    permission: survivalcore.warp.delete
+  
+  # Player Warp Commands
+  pwarp:
+    description: Teleport to a player warp
+    usage: /pwarp <name>
+    aliases: [playerwarp]
+    permission: survivalcore.pwarp.use
+  
+  pwarps:
+    description: List all player warps
+    usage: /pwarps
+    aliases: [listpwarps, playerwarps]
+    permission: survivalcore.pwarp.list
+  
+  setpwarp:
+    description: Create a player warp
+    usage: /setpwarp <name>
+    aliases: [setplayerwarp]
+    permission: survivalcore.pwarp.set
+  
+  delpwarp:
+    description: Delete your player warp
+    usage: /delpwarp <name>
+    aliases: [deleteplayerwarp, removepwarp]
+    permission: survivalcore.pwarp.delete
+  
+  # Shop Commands
+  shop:
+    description: Open the server shop
+    usage: /shop [category]
+    permission: survivalcore.shop.use
+  
+  # Admin Commands
+  survivalcore:
+    description: Main plugin command
+    usage: /survivalcore <reload|info>
+    aliases: [sc, survivalecore]
+    permission: survivalcore.admin
+
+permissions:
+  survivalcore.*:
+    description: Grants access to all SurvivalCore features
+    children:
+      survivalcore.admin: true
+      survivalcore.rtp.*: true
+      survivalcore.tpa.*: true
+      survivalcore.home.*: true
+      survivalcore.warp.*: true
+      survivalcore.pwarp.*: true
+      survivalcore.shop.*: true
+  
+  survivalcore.admin:
+    description: Administrative permissions
+    default: op
+    children:
+      survivalcore.reload: true
+      survivalcore.bypass.cooldown: true
+      survivalcore.warp.set: true
+      survivalcore.warp.delete: true
+  
+  survivalcore.rtp.*:
+    description: All RTP permissions
+    children:
+      survivalcore.rtp.use: true
+      survivalcore.rtp.others: true
+  
+  survivalcore.rtp.use:
+    description: Allows using /rtp command
+    default: true
+  
+  survivalcore.rtp.others:
+    description: Allows teleporting others with RTP
+    default: op
+  
+  survivalcore.tpa.*:
+    description: All TPA permissions
+    children:
+      survivalcore.tpa.send: true
+      survivalcore.tpa.accept: true
+      survivalcore.tpa.deny: true
+      survivalcore.tpa.here: true
+  
+  survivalcore.tpa.send:
+    description: Allows sending teleport requests
+    default: true
+  
+  survivalcore.tpa.accept:
+    description: Allows accepting teleport requests
+    default: true
+  
+  survivalcore.tpa.deny:
+    description: Allows denying teleport requests
+    default: true
+  
+  survivalcore.tpa.here:
+    description: Allows requesting players to teleport to you
+    default: true
+  
+  survivalcore.home.*:
+    description: All home permissions
+    children:
+      survivalcore.home.use: true
+      survivalcore.home.set: true
+      survivalcore.home.delete: true
+      survivalcore.home.list: true
+      survivalcore.home.multiple: true
+  
+  survivalcore.home.use:
+    description: Allows using /home command
+    default: true
+  
+  survivalcore.home.set:
+    description: Allows setting homes
+    default: true
+  
+  survivalcore.home.delete:
+    description: Allows deleting homes
+    default: true
+  
+  survivalcore.home.list:
+    description: Allows listing homes
+    default: true
+  
+  survivalcore.home.multiple:
+    description: Allows setting multiple homes
+    default: false
+  
+  survivalcore.warp.*:
+    description: All warp permissions
+    children:
+      survivalcore.warp.use: true
+      survivalcore.warp.list: true
+      survivalcore.warp.set: true
+      survivalcore.warp.delete: true
+  
+  survivalcore.warp.use:
+    description: Allows using /warp command
+    default: true
+  
+  survivalcore.warp.list:
+    description: Allows listing warps
+    default: true
+  
+  survivalcore.warp.set:
+    description: Allows creating warps
+    default: op
+  
+  survivalcore.warp.delete:
+    description: Allows deleting warps
+    default: op
+  
+  survivalcore.pwarp.*:
+    description: All player warp permissions
+    children:
+      survivalcore.pwarp.use: true
+      survivalcore.pwarp.list: true
+      survivalcore.pwarp.set: true
+      survivalcore.pwarp.delete: true
+  
+  survivalcore.pwarp.use:
+    description: Allows using /pwarp command
+    default: true
+  
+  survivalcore.pwarp.list:
+    description: Allows listing player warps
+    default: true
+  
+  survivalcore.pwarp.set:
+    description: Allows creating player warps
+    default: true
+  
+  survivalcore.pwarp.delete:
+    description: Allows deleting own player warps
+    default: true
+  
+  survivalcore.shop.*:
+    description: All shop permissions
+    children:
+      survivalcore.shop.use: true
+      survivalcore.shop.buy: true
+      survivalcore.shop.sell: true
+  
+  survivalcore.shop.use:
+    description: Allows opening the shop
+    default: true
+  
+  survivalcore.shop.buy:
+    description: Allows buying from the shop
+    default: true
+  
+  survivalcore.shop.sell:
+    description: Allows selling to the shop
+    default: true
