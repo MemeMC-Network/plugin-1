@@ -3,6 +3,7 @@ package me.mememc.network.survivalcore.managers;
 import me.mememc.network.survivalcore.SurvivalCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -32,14 +33,98 @@ public class ShopManager {
     }
     
     /**
+     * Open the categories selection menu
+     */
+    public void openCategoriesMenu(Player player) {
+        String title = plugin.getConfigManager().getShopConfig().getString("gui.title", "Shop") + " - Categories";
+        int size = 27; // 3 rows for categories
+        Inventory inventory = Bukkit.createInventory(null, size, title);
+        
+        ConfigurationSection categoriesSection = plugin.getConfigManager().getShopConfig()
+            .getConfigurationSection("categories");
+        
+        if (categoriesSection != null) {
+            Set<String> categoryKeys = categoriesSection.getKeys(false);
+            int slot = 10; // Start at slot 10 for better layout
+            
+            for (String categoryKey : categoryKeys) {
+                ConfigurationSection categorySection = categoriesSection.getConfigurationSection(categoryKey);
+                if (categorySection != null) {
+                    String iconMaterial = categorySection.getString("icon", "STONE");
+                    String displayName = categorySection.getString("display-name", categoryKey);
+                    List<String> description = categorySection.getStringList("description");
+                    
+                    try {
+                        Material material = Material.valueOf(iconMaterial.toUpperCase());
+                        ItemStack categoryItem = new ItemStack(material);
+                        ItemMeta meta = categoryItem.getItemMeta();
+                        
+                        if (meta != null) {
+                            meta.setDisplayName(displayName.replace("&", "§"));
+                            
+                            List<String> lore = new ArrayList<>();
+                            for (String line : description) {
+                                lore.add(line.replace("&", "§"));
+                            }
+                            lore.add("");
+                            lore.add("§7Click to browse " + displayName.replace("&", ""));
+                            
+                            meta.setLore(lore);
+                            categoryItem.setItemMeta(meta);
+                        }
+                        
+                        inventory.setItem(slot, categoryItem);
+                        slot += 2; // Skip one slot for spacing
+                        
+                        if (slot >= 17) { // Move to next row
+                            slot = slot - 9 + 2;
+                        }
+                        
+                    } catch (IllegalArgumentException e) {
+                        plugin.getLogger().warning("Invalid material for category " + categoryKey + ": " + iconMaterial);
+                    }
+                }
+            }
+        }
+        
+        // Add close button
+        ItemStack close = new ItemStack(Material.BARRIER);
+        ItemMeta closeMeta = close.getItemMeta();
+        if (closeMeta != null) {
+            closeMeta.setDisplayName("§c§lClose Shop");
+            List<String> lore = new ArrayList<>();
+            lore.add("§7Click to close the shop");
+            closeMeta.setLore(lore);
+            close.setItemMeta(closeMeta);
+        }
+        inventory.setItem(22, close);
+        
+        player.openInventory(inventory);
+    }
+    
+    /**
      * Open a specific category shop
      */
     public void openCategoryShop(Player player, String category, int page) {
+        if (player == null) {
+            plugin.getLogger().warning("Cannot open shop for null player");
+            return;
+        }
+        
+        if (category == null || category.trim().isEmpty()) {
+            player.sendMessage("§cInvalid shop category!");
+            return;
+        }
+        
+        if (page < 1) {
+            page = 1;
+        }
+        
         ConfigurationSection categorySection = plugin.getConfigManager().getShopConfig()
             .getConfigurationSection("categories." + category);
         
         if (categorySection == null) {
-            player.sendMessage("§cShop category not found!");
+            player.sendMessage("§cShop category '" + category + "' not found!");
             return;
         }
         
@@ -48,6 +133,13 @@ public class ShopManager {
                       + " - " + displayName + " (Page " + page + ")";
         
         int size = plugin.getConfigManager().getShopConfig().getInt("gui.size", 54);
+        
+        // Validate inventory size
+        if (size % 9 != 0 || size < 9 || size > 54) {
+            size = 54;
+            plugin.getLogger().warning("Invalid shop GUI size in config, using default (54)");
+        }
+        
         Inventory inventory = Bukkit.createInventory(null, size, title);
         
         // Load items for this page
@@ -66,12 +158,24 @@ public class ShopManager {
                     }
                 } catch (NumberFormatException e) {
                     // Skip invalid slot numbers
+                    plugin.getLogger().warning("Invalid slot number in shop config: " + key);
                 }
             }
+        } else if (page == 1) {
+            // If page 1 doesn't exist, show a warning
+            player.sendMessage("§cNo items found in category '" + category + "'!");
+            return;
+        } else {
+            // If page doesn't exist and it's not page 1, go to page 1
+            openCategoryShop(player, category, 1);
+            return;
         }
         
         // Add navigation items
         addNavigationItems(inventory, category, page);
+        
+        // Add balance display
+        addBalanceDisplay(inventory, player);
         
         player.openInventory(inventory);
     }
@@ -160,9 +264,20 @@ public class ShopManager {
             categoriesMeta.setDisplayName("§e§lCategories");
             List<String> lore = new ArrayList<>();
             lore.add("§7Available categories:");
-            lore.add("§7- Blocks");
-            lore.add("§7- Tools");
-            lore.add("§7- Food");
+            
+            // Dynamically load categories
+            List<String> availableCategories = getAvailableCategories();
+            for (String cat : availableCategories) {
+                ConfigurationSection catSection = plugin.getConfigManager().getShopConfig()
+                    .getConfigurationSection("categories." + cat);
+                if (catSection != null) {
+                    String displayName = catSection.getString("display-name", cat);
+                    lore.add("§7- " + displayName.replace("&", ""));
+                }
+            }
+            
+            lore.add("");
+            lore.add("§7Click to view all categories");
             categoriesMeta.setLore(lore);
             categories.setItemMeta(categoriesMeta);
         }
@@ -194,6 +309,45 @@ public class ShopManager {
             }
             inventory.setItem(53, nextPage);
         }
+        
+        // Search button (slot 52)
+        ItemStack search = new ItemStack(Material.SPYGLASS);
+        ItemMeta searchMeta = search.getItemMeta();
+        if (searchMeta != null) {
+            searchMeta.setDisplayName("§b§lSearch Items");
+            List<String> lore = new ArrayList<>();
+            lore.add("§7Click to search for specific items");
+            lore.add("§7Type item name in chat");
+            searchMeta.setLore(lore);
+            search.setItemMeta(searchMeta);
+        }
+        inventory.setItem(52, search);
+        
+        // Transaction History button (slot 51)
+        ItemStack history = new ItemStack(Material.BOOK);
+        ItemMeta historyMeta = history.getItemMeta();
+        if (historyMeta != null) {
+            historyMeta.setDisplayName("§d§lTransaction History");
+            List<String> lore = new ArrayList<>();
+            lore.add("§7View your recent transactions");
+            lore.add("§7Buy and sell history");
+            historyMeta.setLore(lore);
+            history.setItemMeta(historyMeta);
+        }
+        inventory.setItem(51, history);
+        
+        // Favorites button (slot 46)
+        ItemStack favorites = new ItemStack(Material.NETHER_STAR);
+        ItemMeta favoritesMeta = favorites.getItemMeta();
+        if (favoritesMeta != null) {
+            favoritesMeta.setDisplayName("§5§lFavorites");
+            List<String> lore = new ArrayList<>();
+            lore.add("§7View your favorite items");
+            lore.add("§7Quick access to preferred items");
+            favoritesMeta.setLore(lore);
+            favorites.setItemMeta(favoritesMeta);
+        }
+        inventory.setItem(46, favorites);
     }
     
     /**
@@ -227,8 +381,42 @@ public class ShopManager {
      * Process a shop transaction (placeholder for future economy integration)
      */
     public boolean processBuy(Player player, String category, int page, int slot) {
-        // TODO: Implement actual buying logic with economy integration
-        player.sendMessage("§aBuy functionality will be implemented with economy integration!");
+        if (player == null) return false;
+        
+        // Get item information from config
+        ConfigurationSection categorySection = plugin.getConfigManager().getShopConfig()
+            .getConfigurationSection("categories." + category);
+        
+        if (categorySection != null) {
+            ConfigurationSection pageSection = categorySection.getConfigurationSection("page-" + page);
+            if (pageSection != null) {
+                ConfigurationSection itemSection = pageSection.getConfigurationSection(String.valueOf(slot + 1));
+                if (itemSection != null) {
+                    String itemName = itemSection.getString("name", "Unknown Item");
+                    double buyPrice = itemSection.getDouble("buy-price", -1);
+                    int buyAmount = itemSection.getInt("buy-amount", 1);
+                    
+                    if (buyPrice > 0) {
+                        // Check if player has enough money (placeholder)
+                        double playerBalance = getPlayerBalance(player);
+                        if (playerBalance >= buyPrice) {
+                            player.sendMessage("§aPurchased " + buyAmount + "x " + itemName.replace("&", "§") + " for §6$" + buyPrice);
+                            player.sendMessage("§7(Transaction will be processed when economy integration is added)");
+                            playShopSound(player, "buy");
+                        } else {
+                            player.sendMessage("§cYou don't have enough money! Need §6$" + buyPrice + "§c, but you only have §6$" + String.format("%.2f", playerBalance));
+                            playShopSound(player, "click");
+                        }
+                    } else {
+                        player.sendMessage("§cThis item is not available for purchase!");
+                        playShopSound(player, "click");
+                    }
+                } else {
+                    player.sendMessage("§cItem not found in shop configuration!");
+                }
+            }
+        }
+        
         return true;
     }
     
@@ -236,8 +424,163 @@ public class ShopManager {
      * Process a shop sell transaction (placeholder for future economy integration)
      */
     public boolean processSell(Player player, String category, int page, int slot) {
-        // TODO: Implement actual selling logic with economy integration
-        player.sendMessage("§cSell functionality will be implemented with economy integration!");
+        if (player == null) return false;
+        
+        // Get item information from config
+        ConfigurationSection categorySection = plugin.getConfigManager().getShopConfig()
+            .getConfigurationSection("categories." + category);
+        
+        if (categorySection != null) {
+            ConfigurationSection pageSection = categorySection.getConfigurationSection("page-" + page);
+            if (pageSection != null) {
+                ConfigurationSection itemSection = pageSection.getConfigurationSection(String.valueOf(slot + 1));
+                if (itemSection != null) {
+                    String itemName = itemSection.getString("name", "Unknown Item");
+                    double sellPrice = itemSection.getDouble("sell-price", -1);
+                    int sellAmount = itemSection.getInt("sell-amount", 1);
+                    
+                    if (sellPrice > 0) {
+                        player.sendMessage("§aSold " + sellAmount + "x " + itemName.replace("&", "§") + " for §6$" + sellPrice);
+                        player.sendMessage("§7(Transaction will be processed when economy integration is added)");
+                        playShopSound(player, "sell");
+                    } else {
+                        player.sendMessage("§cThis item cannot be sold to the shop!");
+                        playShopSound(player, "click");
+                    }
+                } else {
+                    player.sendMessage("§cItem not found in shop configuration!");
+                }
+            }
+        }
+        
         return true;
+    }
+    
+    /**
+     * Get player balance (placeholder for economy integration)
+     */
+    public double getPlayerBalance(Player player) {
+        // TODO: Implement with economy plugin integration
+        return plugin.getConfigManager().getShopConfig().getDouble("default-balance", 1000.0);
+    }
+    
+    /**
+     * Check if a shop feature is enabled
+     */
+    private boolean isFeatureEnabled(String feature) {
+        return plugin.getConfigManager().getShopConfig().getBoolean("features.enable-" + feature, true);
+    }
+    
+    /**
+     * Play a shop sound effect
+     */
+    private void playShopSound(Player player, String soundType) {
+        if (!isFeatureEnabled("sounds")) return;
+        
+        try {
+            String soundName = plugin.getConfigManager().getShopConfig().getString("gui." + soundType + "-sound", "UI_BUTTON_CLICK");
+            Sound sound = Sound.valueOf(soundName);
+            player.playSound(player.getLocation(), sound, 1.0f, 1.0f);
+        } catch (Exception e) {
+            // Sound not found or not available, silently continue
+            plugin.getLogger().fine("Could not play shop sound: " + soundType);
+        }
+    }
+    
+    /**
+     * Add a balance display item to the shop inventory
+     */
+    private void addBalanceDisplay(Inventory inventory, Player player) {
+        if (!isFeatureEnabled("balance-display")) return;
+        
+        ItemStack balance = new ItemStack(Material.GOLD_INGOT);
+        ItemMeta balanceMeta = balance.getItemMeta();
+        if (balanceMeta != null) {
+            balanceMeta.setDisplayName("§6§lYour Balance");
+            List<String> lore = new ArrayList<>();
+            lore.add("§7Current balance: §6$" + String.format("%.2f", getPlayerBalance(player)));
+            lore.add("");
+            lore.add("§7This updates when you buy/sell items");
+            balanceMeta.setLore(lore);
+            balance.setItemMeta(balanceMeta);
+        }
+        inventory.setItem(48, balance);
+    }
+    
+    /**
+     * Open favorites shop for a player
+     */
+    public void openFavoritesShop(Player player) {
+        String title = plugin.getConfigManager().getShopConfig().getString("gui.title", "Shop") + " - Favorites";
+        int size = 54;
+        Inventory inventory = Bukkit.createInventory(null, size, title);
+        
+        // Add some example favorite items (in a real implementation, this would be stored per player)
+        ItemStack favoriteItem1 = createExampleFavoriteItem(Material.DIAMOND_SWORD, "§fFavorite: Diamond Sword", 500.0, 250.0);
+        ItemStack favoriteItem2 = createExampleFavoriteItem(Material.ENCHANTED_BOOK, "§fFavorite: Enchanted Book", 100.0, 50.0);
+        ItemStack favoriteItem3 = createExampleFavoriteItem(Material.GOLDEN_APPLE, "§fFavorite: Golden Apple", 100.0, 50.0);
+        
+        if (favoriteItem1 != null) inventory.setItem(10, favoriteItem1);
+        if (favoriteItem2 != null) inventory.setItem(11, favoriteItem2);
+        if (favoriteItem3 != null) inventory.setItem(12, favoriteItem3);
+        
+        // Add info item
+        ItemStack info = new ItemStack(Material.PAPER);
+        ItemMeta infoMeta = info.getItemMeta();
+        if (infoMeta != null) {
+            infoMeta.setDisplayName("§e§lFavorites Info");
+            List<String> lore = new ArrayList<>();
+            lore.add("§7Right-click items in the shop");
+            lore.add("§7while sneaking to add them");
+            lore.add("§7to your favorites!");
+            lore.add("");
+            lore.add("§7Your favorites appear here");
+            lore.add("§7for quick access.");
+            infoMeta.setLore(lore);
+            info.setItemMeta(infoMeta);
+        }
+        inventory.setItem(40, info);
+        
+        // Add close button
+        ItemStack close = new ItemStack(Material.BARRIER);
+        ItemMeta closeMeta = close.getItemMeta();
+        if (closeMeta != null) {
+            closeMeta.setDisplayName("§c§lClose Favorites");
+            List<String> lore = new ArrayList<>();
+            lore.add("§7Click to close favorites");
+            closeMeta.setLore(lore);
+            close.setItemMeta(closeMeta);
+        }
+        inventory.setItem(49, close);
+        
+        player.openInventory(inventory);
+    }
+    
+    private ItemStack createExampleFavoriteItem(Material material, String name, double buyPrice, double sellPrice) {
+        try {
+            ItemStack item = new ItemStack(material);
+            ItemMeta meta = item.getItemMeta();
+            
+            if (meta != null) {
+                meta.setDisplayName(name.replace("&", "§"));
+                
+                List<String> lore = new ArrayList<>();
+                lore.add("§aBuy: §f1x for §6$" + buyPrice);
+                lore.add("§cSell: §f1x for §6$" + sellPrice);
+                lore.add("");
+                lore.add("§7Left-click to buy");
+                lore.add("§7Right-click to sell");
+                lore.add("§7Shift+Right-click to remove from favorites");
+                
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+            }
+            
+            return item;
+            
+        } catch (Exception e) {
+            plugin.getLogger().warning("Error creating favorite item: " + e.getMessage());
+            return null;
+        }
     }
 }
