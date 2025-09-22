@@ -88,6 +88,15 @@ public class AdminCommand implements CommandExecutor {
         MessageUtils.sendMessage(sender, "&7- Player Warps: " + (plugin.getConfigManager().isPlayerWarpEnabled() ? "&aEnabled" : "&cDisabled"));
         MessageUtils.sendMessage(sender, "&7- Shop: " + (plugin.getConfigManager().isShopEnabled() ? "&aEnabled" : "&cDisabled"));
         
+        // Shop statistics
+        if (plugin.getConfigManager().isShopEnabled()) {
+            java.util.List<String> categories = plugin.getShopManager().getAvailableCategories();
+            MessageUtils.sendMessage(sender, "&7Shop Categories: &e" + categories.size() + " &7(" + String.join(", ", categories) + ")");
+        }
+        MessageUtils.sendMessage(sender, "&7- Warps: " + (plugin.getConfigManager().isWarpEnabled() ? "&aEnabled" : "&cDisabled"));
+        MessageUtils.sendMessage(sender, "&7- Player Warps: " + (plugin.getConfigManager().isPlayerWarpEnabled() ? "&aEnabled" : "&cDisabled"));
+        MessageUtils.sendMessage(sender, "&7- Shop: " + (plugin.getConfigManager().isShopEnabled() ? "&aEnabled" : "&cDisabled"));
+        
         // Statistics
         MessageUtils.sendMessage(sender, "&7Statistics:");
         MessageUtils.sendMessage(sender, "&7- Total Warps: &e" + plugin.getWarpManager().getWarpCount());

@@ -39,10 +39,16 @@ A comprehensive Minecraft Spigot plugin designed for survival servers, created b
 
 ### 🛒 Multi-Page Shop System
 - GUI-based shop with multiple categories
-- 3 pages per category (Blocks, Tools, Food)
-- Buy and sell functionality
-- Configurable prices and items
-- Economic integration support
+- 7 categories: Blocks, Tools, Food, Enchantments, Potions, Decorations, Redstone
+- Multiple pages per category with 45+ items each
+- Buy and sell functionality with dynamic pricing
+- Player balance display with real-time updates
+- Search functionality for finding specific items
+- Transaction history tracking
+- Favorites system for quick access to preferred items
+- Category selector with dynamic category loading
+- Navigation controls (previous/next page, close)
+- Economic integration support (Vault compatible)
 
 ## Configuration
 
