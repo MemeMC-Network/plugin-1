@@ -164,6 +164,52 @@ commands:
     aliases: [togglechat]
     permission: survivalcore.chat.toggle
   
+  # Enhanced Admin Commands
+  adminpanel:
+    description: Open the admin control panel
+    usage: /adminpanel
+    aliases: [apanel]
+    permission: survivalcore.admin.panel
+  
+  god:
+    description: Toggle god mode
+    usage: /god [player]
+    aliases: [godmode]
+    permission: survivalcore.admin.god
+  
+  vanish:
+    description: Toggle vanish mode
+    usage: /vanish
+    aliases: [v]
+    permission: survivalcore.admin.vanish
+  
+  heal:
+    description: Heal yourself or another player
+    usage: /heal [player]
+    permission: survivalcore.admin.heal
+  
+  feed:
+    description: Feed yourself or another player
+    usage: /feed [player]
+    permission: survivalcore.admin.feed
+  
+  gamemode:
+    description: Change gamemode
+    usage: /gamemode <mode> [player]
+    aliases: [gm]
+    permission: survivalcore.admin.gamemode
+  
+  teleport:
+    description: Teleport to player or coordinates
+    usage: /teleport <player|x y z>
+    aliases: [tp]
+    permission: survivalcore.admin.teleport
+  
+  backup:
+    description: Create a server backup
+    usage: /backup [name]
+    permission: survivalcore.admin.backup
+  
   # Admin Commands
   survivalcore:
     description: Main plugin command
@@ -194,6 +240,15 @@ permissions:
       survivalcore.bypass.cooldown: true
       survivalcore.warp.set: true
       survivalcore.warp.delete: true
+      survivalcore.admin.panel: true
+      survivalcore.admin.god: true
+      survivalcore.admin.vanish: true
+      survivalcore.admin.heal: true
+      survivalcore.admin.feed: true
+      survivalcore.admin.gamemode: true
+      survivalcore.admin.teleport: true
+      survivalcore.admin.backup: true
+      survivalcore.admin.see-vanished: true
   
   survivalcore.rtp.*:
     description: All RTP permissions
@@ -429,4 +484,44 @@ permissions:
   
   survivalcore.chat.bypass.mute:
     description: Cannot be muted
+    default: op
+  
+  survivalcore.admin.panel:
+    description: Allows opening admin panel
+    default: op
+  
+  survivalcore.admin.god:
+    description: Allows using god mode
+    default: op
+  
+  survivalcore.admin.god.others:
+    description: Allows toggling god mode for other players
+    default: op
+  
+  survivalcore.admin.vanish:
+    description: Allows using vanish mode
+    default: op
+  
+  survivalcore.admin.see-vanished:
+    description: Allows seeing vanished players
+    default: op
+  
+  survivalcore.admin.heal:
+    description: Allows healing players
+    default: op
+  
+  survivalcore.admin.feed:
+    description: Allows feeding players
+    default: op
+  
+  survivalcore.admin.gamemode:
+    description: Allows changing gamemode
+    default: op
+  
+  survivalcore.admin.teleport:
+    description: Allows teleporting
+    default: op
+  
+  survivalcore.admin.backup:
+    description: Allows creating backups
     default: op

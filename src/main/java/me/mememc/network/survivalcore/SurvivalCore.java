@@ -1,6 +1,7 @@
 package me.mememc.network.survivalcore;
 
 import me.mememc.network.survivalcore.commands.*;
+import me.mememc.network.survivalcore.listeners.AdminToolsListener;
 import me.mememc.network.survivalcore.listeners.KitListener;
 import me.mememc.network.survivalcore.listeners.PlayerListener;
 import me.mememc.network.survivalcore.listeners.StatsListener;
@@ -40,10 +41,13 @@ public class SurvivalCore extends JavaPlugin {
     private KitManager kitManager;
     private StatsManager statsManager;
     private ChatManager chatManager;
+    private AdminToolsManager adminToolsManager;
+    private long serverStartTime;
     
     @Override
     public void onEnable() {
         instance = this;
+        serverStartTime = System.currentTimeMillis();
         
         // Initialize configuration
         saveDefaultConfig();
@@ -61,6 +65,7 @@ public class SurvivalCore extends JavaPlugin {
             this.kitManager = new KitManager(this);
             this.statsManager = new StatsManager(this);
             this.chatManager = new ChatManager(this);
+            this.adminToolsManager = new AdminToolsManager(this);
             
             // Initialize database
             if (!databaseManager.initialize()) {
@@ -159,6 +164,18 @@ public class SurvivalCore extends JavaPlugin {
         getCommand("clearchat").setExecutor(chatCommand);
         getCommand("mutechat").setExecutor(chatCommand);
         
+        // Enhanced Admin Commands
+        EnhancedAdminCommand adminCommand = new EnhancedAdminCommand(this);
+        getCommand("adminpanel").setExecutor(adminCommand);
+        getCommand("god").setExecutor(adminCommand);
+        getCommand("godmode").setExecutor(adminCommand);
+        getCommand("vanish").setExecutor(adminCommand);
+        getCommand("heal").setExecutor(adminCommand);
+        getCommand("feed").setExecutor(adminCommand);
+        getCommand("gamemode").setExecutor(adminCommand);
+        getCommand("teleport").setExecutor(adminCommand);
+        getCommand("backup").setExecutor(adminCommand);
+        
         // Admin Commands
         getCommand("survivalcore").setExecutor(new AdminCommand(this));
     }
@@ -167,6 +184,7 @@ public class SurvivalCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new KitListener(this), this);
         getServer().getPluginManager().registerEvents(new StatsListener(this), this);
+        getServer().getPluginManager().registerEvents(new AdminToolsListener(this), this);
     }
     
     public void reloadPlugin() {
@@ -226,5 +244,13 @@ public class SurvivalCore extends JavaPlugin {
     
     public ChatManager getChatManager() {
         return chatManager;
+    }
+    
+    public AdminToolsManager getAdminToolsManager() {
+        return adminToolsManager;
+    }
+    
+    public long getServerStartTime() {
+        return serverStartTime;
     }
 }

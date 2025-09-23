@@ -83,6 +83,19 @@ A comprehensive Minecraft Spigot plugin designed for survival servers, created b
 - Color code support for privileged players
 - Configurable chat formats per permission group
 
+### 🛠️ Enhanced Admin Tools
+- Comprehensive admin control panel with GUI interface
+- Player management with teleportation and monitoring
+- God mode with damage immunity for administrators
+- Vanish mode with selective visibility controls
+- Instant heal and feed commands for player management
+- Gamemode switching with permission controls
+- Advanced teleportation system (players and coordinates)
+- Server backup system with automated scheduling
+- Real-time server statistics (TPS, RAM, uptime, player count)
+- World management and monitoring
+- Plugin status overview and management
+
 ## Configuration
 
 ### Main Config (`config.yml`)
@@ -123,6 +136,7 @@ The plugin includes a comprehensive permission system with granular control:
 - `survivalcore.kit.*` - All kit permissions
 - `survivalcore.stats.*` - All statistics permissions
 - `survivalcore.chat.*` - All chat management permissions
+- `survivalcore.admin.*` - All administrative permissions
 - `survivalcore.bypass.cooldown` - Bypass all cooldowns
 
 ## Database Support
@@ -177,6 +191,16 @@ The plugin includes a comprehensive permission system with granular control:
 - `/unmute <player>` - Unmute a player from chat
 - `/clearchat` - Clear chat for all players
 - `/mutechat` - Toggle server-wide chat
+
+### Admin Tools Commands
+- `/adminpanel` - Open admin control panel GUI
+- `/god [player]` - Toggle god mode (damage immunity)
+- `/vanish` - Toggle invisibility mode
+- `/heal [player]` - Heal yourself or another player
+- `/feed [player]` - Feed yourself or another player
+- `/gamemode <mode> [player]` - Change gamemode
+- `/teleport <player|x y z>` - Teleport to player or coordinates
+- `/backup [name]` - Create server backup
 
 ### Admin Commands
 - `/survivalcore <reload|info>` - Plugin management
