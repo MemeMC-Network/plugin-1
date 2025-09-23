@@ -39,6 +39,7 @@ public class SurvivalCore extends JavaPlugin {
     private ShopManager shopManager;
     private KitManager kitManager;
     private StatsManager statsManager;
+    private ChatManager chatManager;
     
     @Override
     public void onEnable() {
@@ -59,6 +60,7 @@ public class SurvivalCore extends JavaPlugin {
             this.shopManager = new ShopManager(this);
             this.kitManager = new KitManager(this);
             this.statsManager = new StatsManager(this);
+            this.chatManager = new ChatManager(this);
             
             // Initialize database
             if (!databaseManager.initialize()) {
@@ -150,6 +152,13 @@ public class SurvivalCore extends JavaPlugin {
         getCommand("stats").setExecutor(new StatsCommand(this));
         getCommand("leaderboard").setExecutor(new StatsCommand(this));
         
+        // Chat Commands
+        ChatCommand chatCommand = new ChatCommand(this);
+        getCommand("mute").setExecutor(chatCommand);
+        getCommand("unmute").setExecutor(chatCommand);
+        getCommand("clearchat").setExecutor(chatCommand);
+        getCommand("mutechat").setExecutor(chatCommand);
+        
         // Admin Commands
         getCommand("survivalcore").setExecutor(new AdminCommand(this));
     }
@@ -213,5 +222,9 @@ public class SurvivalCore extends JavaPlugin {
     
     public StatsManager getStatsManager() {
         return statsManager;
+    }
+    
+    public ChatManager getChatManager() {
+        return chatManager;
     }
 }

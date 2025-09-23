@@ -141,6 +141,29 @@ commands:
     aliases: [lb, top]
     permission: survivalcore.stats.leaderboard
   
+  # Chat Management Commands
+  mute:
+    description: Mute a player from chat
+    usage: /mute <player>
+    permission: survivalcore.chat.mute
+  
+  unmute:
+    description: Unmute a player from chat
+    usage: /unmute <player>
+    permission: survivalcore.chat.unmute
+  
+  clearchat:
+    description: Clear the chat for all players
+    usage: /clearchat
+    aliases: [cc]
+    permission: survivalcore.chat.clear
+  
+  mutechat:
+    description: Toggle chat for the entire server
+    usage: /mutechat
+    aliases: [togglechat]
+    permission: survivalcore.chat.toggle
+  
   # Admin Commands
   survivalcore:
     description: Main plugin command
@@ -161,6 +184,7 @@ permissions:
       survivalcore.shop.*: true
       survivalcore.kit.*: true
       survivalcore.stats.*: true
+      survivalcore.chat.*: true
   
   survivalcore.admin:
     description: Administrative permissions
@@ -347,3 +371,62 @@ permissions:
   survivalcore.stats.leaderboard:
     description: Allows viewing leaderboards
     default: true
+  
+  survivalcore.chat.*:
+    description: All chat permissions
+    children:
+      survivalcore.chat.color: true
+      survivalcore.chat.mute: true
+      survivalcore.chat.unmute: true
+      survivalcore.chat.clear: true
+      survivalcore.chat.toggle: true
+      survivalcore.chat.bypass.cooldown: true
+      survivalcore.chat.bypass.spam: true
+      survivalcore.chat.bypass.filter: true
+      survivalcore.chat.bypass.urls: true
+      survivalcore.chat.bypass.caps: true
+      survivalcore.chat.bypass.mute: true
+  
+  survivalcore.chat.color:
+    description: Allows using color codes in chat
+    default: false
+  
+  survivalcore.chat.mute:
+    description: Allows muting players
+    default: op
+  
+  survivalcore.chat.unmute:
+    description: Allows unmuting players
+    default: op
+  
+  survivalcore.chat.clear:
+    description: Allows clearing chat
+    default: op
+  
+  survivalcore.chat.toggle:
+    description: Allows toggling server chat
+    default: op
+  
+  survivalcore.chat.bypass.cooldown:
+    description: Bypass chat cooldown
+    default: op
+  
+  survivalcore.chat.bypass.spam:
+    description: Bypass anti-spam protection
+    default: op
+  
+  survivalcore.chat.bypass.filter:
+    description: Bypass profanity filter
+    default: op
+  
+  survivalcore.chat.bypass.urls:
+    description: Bypass URL blocking
+    default: op
+  
+  survivalcore.chat.bypass.caps:
+    description: Bypass caps filter
+    default: op
+  
+  survivalcore.chat.bypass.mute:
+    description: Cannot be muted
+    default: op

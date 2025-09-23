@@ -73,4 +73,11 @@ public class MessageUtils {
         String message = configManager.getMessagesConfig().getString(configPath, defaultMessage);
         return formatMessage(prefix + message);
     }
+    
+    /**
+     * Colorize a message (alias for formatMessage)
+     */
+    public static String colorize(String message) {
+        return formatMessage(message);
+    }
 }

@@ -70,6 +70,19 @@ A comprehensive Minecraft Spigot plugin designed for survival servers, created b
 - Player ranking system with visual displays
 - Historical data preservation across sessions
 
+### 💬 Advanced Chat Management
+- Comprehensive chat moderation and formatting system
+- Anti-spam protection with message cooldowns and repeat detection
+- Profanity filter with customizable word list and replacement
+- URL blocking to prevent unwanted links
+- Caps filter to prevent excessive capital letters
+- Player muting system with staff commands
+- Global chat toggle for server-wide chat control
+- Chat clearing functionality for moderators
+- Permission-based chat formatting with group support
+- Color code support for privileged players
+- Configurable chat formats per permission group
+
 ## Configuration
 
 ### Main Config (`config.yml`)
@@ -109,6 +122,7 @@ The plugin includes a comprehensive permission system with granular control:
 - `survivalcore.shop.*` - All shop permissions
 - `survivalcore.kit.*` - All kit permissions
 - `survivalcore.stats.*` - All statistics permissions
+- `survivalcore.chat.*` - All chat management permissions
 - `survivalcore.bypass.cooldown` - Bypass all cooldowns
 
 ## Database Support
@@ -157,6 +171,12 @@ The plugin includes a comprehensive permission system with granular control:
 ### Statistics Commands
 - `/stats [player]` - View player statistics
 - `/leaderboard [category]` - View server leaderboards
+
+### Chat Management Commands
+- `/mute <player>` - Mute a player from chat
+- `/unmute <player>` - Unmute a player from chat
+- `/clearchat` - Clear chat for all players
+- `/mutechat` - Toggle server-wide chat
 
 ### Admin Commands
 - `/survivalcore <reload|info>` - Plugin management

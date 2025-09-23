@@ -119,3 +119,24 @@ kit:
 stats:
   not-found: "{prefix}&cNo statistics found for that player!"
   invalid-category: "{prefix}&cInvalid category! Available: playtime, blocks, broken, kills, pvp, deaths, travel, crafted, fish"
+
+# Chat Messages
+chat:
+  muted: "{prefix}&cYou are currently muted and cannot speak in chat!"
+  cooldown: "{prefix}&cYou must wait {time} seconds before sending another message!"
+  spam: "{prefix}&cPlease don't repeat the same message!"
+  filtered: "{prefix}&cYour message contains inappropriate language and was blocked!"
+  no-urls: "{prefix}&cYou cannot send URLs in chat!"
+  cannot-mute: "{prefix}&cYou cannot mute this player!"
+  already-muted: "{prefix}&cPlayer {player} is already muted!"
+  not-muted: "{prefix}&cPlayer {player} is not muted!"
+  player-muted: "{prefix}&aPlayer {player} has been muted!"
+  player-unmuted: "{prefix}&aPlayer {player} has been unmuted!"
+  you-were-muted: "{prefix}&cYou have been muted by {staff}!"
+  you-were-unmuted: "{prefix}&aYou have been unmuted by {staff}!"
+  cleared: "{prefix}&aChat has been cleared!"
+  cleared-by-you: "{prefix}&aYou cleared the chat!"
+  enabled: "{prefix}&aChat has been enabled!"
+  disabled: "{prefix}&cChat has been disabled!"
+  enabled-by-staff: "{prefix}&aYou enabled chat for everyone!"
+  disabled-by-staff: "{prefix}&cYou disabled chat for everyone!"
