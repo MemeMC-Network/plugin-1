@@ -116,6 +116,18 @@ commands:
     usage: /shop [category]
     permission: survivalcore.shop.use
   
+  # Kit Commands
+  kit:
+    description: Claim or view available kits
+    usage: /kit [name]
+    aliases: [kits]
+    permission: survivalcore.kit.use
+  
+  kits:
+    description: List all available kits
+    usage: /kits
+    permission: survivalcore.kit.list
+  
   # Admin Commands
   survivalcore:
     description: Main plugin command
@@ -134,6 +146,7 @@ permissions:
       survivalcore.warp.*: true
       survivalcore.pwarp.*: true
       survivalcore.shop.*: true
+      survivalcore.kit.*: true
   
   survivalcore.admin:
     description: Administrative permissions
@@ -277,3 +290,27 @@ permissions:
   survivalcore.shop.sell:
     description: Allows selling to the shop
     default: true
+  
+  survivalcore.kit.*:
+    description: All kit permissions
+    children:
+      survivalcore.kit.use: true
+      survivalcore.kit.list: true
+      survivalcore.kit.gui: true
+      survivalcore.kit.reload: true
+  
+  survivalcore.kit.use:
+    description: Allows claiming kits
+    default: true
+  
+  survivalcore.kit.list:
+    description: Allows listing available kits
+    default: true
+  
+  survivalcore.kit.gui:
+    description: Allows using kit GUI interface
+    default: true
+  
+  survivalcore.kit.reload:
+    description: Allows reloading kit configuration
+    default: op

@@ -102,3 +102,15 @@ admin:
   info-author: "&7Author: &aMemeMC Network"
   info-database: "&7Database: &a{database}"
   info-players: "&7Online Players: &a{players}"
+
+# Kit Messages
+kit:
+  not-found: "{prefix}&cKit '{kit}' not found!"
+  received: "{prefix}&aYou received the '{kit}' kit!"
+  already-claimed: "{prefix}&cYou have already claimed the '{kit}' kit!"
+  cooldown: "{prefix}&cYou must wait {time} before claiming the '{kit}' kit again!"
+  no-kits: "{prefix}&cNo kits available!"
+  list-header: "{prefix}&aAvailable Kits:"
+  list-item: "&7- &e{kit}&7: {description}{status}"
+  list-footer: "&7Use &e/kit <name> &7to claim a kit"
+  reloaded: "{prefix}&aKits reloaded successfully!"

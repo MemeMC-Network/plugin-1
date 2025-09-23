@@ -1,0 +1,207 @@
+# SurvivalCore-V2 Kits Configuration
+# Configure starter kits and special kits for players
+
+# Kit Settings
+settings:
+  enabled: true
+  # Whether to show kits in GUI format (if player has permission)
+  gui-enabled: true
+
+# Kit Definitions
+kits:
+  starter:
+    display-name: "&a&lStarter Kit"
+    description: "Basic items to get you started"
+    permission: ""
+    cooldown: 3600  # 1 hour in seconds
+    cost: 0.0
+    one-time: true
+    items:
+      1:
+        material: WOODEN_SWORD
+        amount: 1
+        name: "&eStarter Sword"
+        lore:
+          - "&7A basic sword to protect yourself"
+      2:
+        material: WOODEN_PICKAXE
+        amount: 1
+        name: "&eStarter Pickaxe"
+        lore:
+          - "&7Start mining with this tool"
+      3:
+        material: WOODEN_AXE
+        amount: 1
+        name: "&eStarter Axe"
+        lore:
+          - "&7Chop trees with this axe"
+      4:
+        material: BREAD
+        amount: 16
+        name: "&6Bread"
+        lore:
+          - "&7Food to keep you alive"
+      5:
+        material: TORCH
+        amount: 32
+        name: "&eTorch"
+        lore:
+          - "&7Light up the darkness"
+
+  daily:
+    display-name: "&b&lDaily Kit"
+    description: "Daily supplies for survival"
+    permission: "survivalcore.kit.daily"
+    cooldown: 86400  # 24 hours in seconds
+    cost: 0.0
+    one-time: false
+    items:
+      1:
+        material: COOKED_BEEF
+        amount: 16
+        name: "&6Cooked Beef"
+      2:
+        material: GOLDEN_APPLE
+        amount: 2
+        name: "&6Golden Apple"
+      3:
+        material: TORCH
+        amount: 64
+        name: "&eTorch"
+      4:
+        material: COAL
+        amount: 32
+        name: "&8Coal"
+      5:
+        material: IRON_INGOT
+        amount: 8
+        name: "&7Iron Ingot"
+
+  vip:
+    display-name: "&6&lVIP Kit"
+    description: "Exclusive items for VIP players"
+    permission: "survivalcore.kit.vip"
+    cooldown: 43200  # 12 hours in seconds
+    cost: 0.0
+    one-time: false
+    items:
+      1:
+        material: DIAMOND_SWORD
+        amount: 1
+        name: "&bVIP Diamond Sword"
+        lore:
+          - "&7A powerful weapon"
+          - "&7Exclusive to VIP members"
+      2:
+        material: DIAMOND_PICKAXE
+        amount: 1
+        name: "&bVIP Diamond Pickaxe"
+        lore:
+          - "&7Mine faster and longer"
+          - "&7Exclusive to VIP members"
+      3:
+        material: ENCHANTED_GOLDEN_APPLE
+        amount: 1
+        name: "&6Enchanted Golden Apple"
+        lore:
+          - "&7The ultimate healing item"
+      4:
+        material: ENDER_PEARL
+        amount: 4
+        name: "&5Ender Pearl"
+        lore:
+          - "&7Teleport anywhere you throw"
+      5:
+        material: EXPERIENCE_BOTTLE
+        amount: 16
+        name: "&aBottle o' Enchanting"
+        lore:
+          - "&7Gain experience points"
+
+  pvp:
+    display-name: "&c&lPvP Kit"
+    description: "Everything you need for combat"
+    permission: "survivalcore.kit.pvp"
+    cooldown: 1800  # 30 minutes in seconds
+    cost: 50.0
+    one-time: false
+    items:
+      1:
+        material: IRON_SWORD
+        amount: 1
+        name: "&cPvP Sword"
+        lore:
+          - "&7Sharp and ready for battle"
+      2:
+        material: BOW
+        amount: 1
+        name: "&cPvP Bow"
+        lore:
+          - "&7For ranged combat"
+      3:
+        material: ARROW
+        amount: 64
+        name: "&fArrows"
+      4:
+        material: IRON_HELMET
+        amount: 1
+        name: "&7Iron Helmet"
+      5:
+        material: IRON_CHESTPLATE
+        amount: 1
+        name: "&7Iron Chestplate"
+      6:
+        material: IRON_LEGGINGS
+        amount: 1
+        name: "&7Iron Leggings"
+      7:
+        material: IRON_BOOTS
+        amount: 1
+        name: "&7Iron Boots"
+      8:
+        material: COOKED_BEEF
+        amount: 32
+        name: "&6Food"
+      9:
+        material: POTION
+        amount: 3
+        name: "&dHealing Potion"
+        lore:
+          - "&7Restore your health quickly"
+
+  builder:
+    display-name: "&e&lBuilder Kit"
+    description: "Materials for construction projects"
+    permission: "survivalcore.kit.builder"
+    cooldown: 7200  # 2 hours in seconds
+    cost: 25.0
+    one-time: false
+    items:
+      1:
+        material: OAK_PLANKS
+        amount: 64
+        name: "&6Oak Planks"
+      2:
+        material: STONE_BRICKS
+        amount: 64
+        name: "&7Stone Bricks"
+      3:
+        material: GLASS
+        amount: 32
+        name: "&fGlass"
+      4:
+        material: OAK_DOOR
+        amount: 8
+        name: "&6Oak Door"
+      5:
+        material: LADDER
+        amount: 16
+        name: "&eLadder"
+      6:
+        material: REDSTONE
+        amount: 32
+        name: "&cRedstone"
+      7:
+        material: IRON_INGOT
+        amount: 16
+        name: "&7Iron Ingot"

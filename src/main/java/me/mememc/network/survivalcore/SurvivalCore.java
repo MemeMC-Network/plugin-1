@@ -1,6 +1,7 @@
 package me.mememc.network.survivalcore;
 
 import me.mememc.network.survivalcore.commands.*;
+import me.mememc.network.survivalcore.listeners.KitListener;
 import me.mememc.network.survivalcore.listeners.PlayerListener;
 import me.mememc.network.survivalcore.managers.*;
 import me.mememc.network.survivalcore.utils.ConfigManager;
@@ -35,6 +36,7 @@ public class SurvivalCore extends JavaPlugin {
     private WarpManager warpManager;
     private PlayerWarpManager playerWarpManager;
     private ShopManager shopManager;
+    private KitManager kitManager;
     
     @Override
     public void onEnable() {
@@ -53,6 +55,7 @@ public class SurvivalCore extends JavaPlugin {
             this.warpManager = new WarpManager(this);
             this.playerWarpManager = new PlayerWarpManager(this);
             this.shopManager = new ShopManager(this);
+            this.kitManager = new KitManager(this);
             
             // Initialize database
             if (!databaseManager.initialize()) {
@@ -136,12 +139,17 @@ public class SurvivalCore extends JavaPlugin {
         // Shop Commands
         getCommand("shop").setExecutor(new ShopCommand(this));
         
+        // Kit Commands
+        getCommand("kit").setExecutor(new KitCommand(this));
+        getCommand("kits").setExecutor(new KitCommand(this));
+        
         // Admin Commands
         getCommand("survivalcore").setExecutor(new AdminCommand(this));
     }
     
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        getServer().getPluginManager().registerEvents(new KitListener(this), this);
     }
     
     public void reloadPlugin() {
@@ -189,5 +197,9 @@ public class SurvivalCore extends JavaPlugin {
     
     public ShopManager getShopManager() {
         return shopManager;
+    }
+    
+    public KitManager getKitManager() {
+        return kitManager;
     }
 }
