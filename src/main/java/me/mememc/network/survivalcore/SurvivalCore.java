@@ -1,7 +1,10 @@
 package me.mememc.network.survivalcore;
 
 import me.mememc.network.survivalcore.commands.*;
+import me.mememc.network.survivalcore.listeners.AdminToolsListener;
+import me.mememc.network.survivalcore.listeners.KitListener;
 import me.mememc.network.survivalcore.listeners.PlayerListener;
+import me.mememc.network.survivalcore.listeners.StatsListener;
 import me.mememc.network.survivalcore.managers.*;
 import me.mememc.network.survivalcore.utils.ConfigManager;
 import me.mememc.network.survivalcore.utils.DatabaseManager;
@@ -35,10 +38,16 @@ public class SurvivalCore extends JavaPlugin {
     private WarpManager warpManager;
     private PlayerWarpManager playerWarpManager;
     private ShopManager shopManager;
+    private KitManager kitManager;
+    private StatsManager statsManager;
+    private ChatManager chatManager;
+    private AdminToolsManager adminToolsManager;
+    private long serverStartTime;
     
     @Override
     public void onEnable() {
         instance = this;
+        serverStartTime = System.currentTimeMillis();
         
         // Initialize configuration
         saveDefaultConfig();
@@ -53,6 +62,10 @@ public class SurvivalCore extends JavaPlugin {
             this.warpManager = new WarpManager(this);
             this.playerWarpManager = new PlayerWarpManager(this);
             this.shopManager = new ShopManager(this);
+            this.kitManager = new KitManager(this);
+            this.statsManager = new StatsManager(this);
+            this.chatManager = new ChatManager(this);
+            this.adminToolsManager = new AdminToolsManager(this);
             
             // Initialize database
             if (!databaseManager.initialize()) {
@@ -136,12 +149,42 @@ public class SurvivalCore extends JavaPlugin {
         // Shop Commands
         getCommand("shop").setExecutor(new ShopCommand(this));
         
+        // Kit Commands
+        getCommand("kit").setExecutor(new KitCommand(this));
+        getCommand("kits").setExecutor(new KitCommand(this));
+        
+        // Stats Commands
+        getCommand("stats").setExecutor(new StatsCommand(this));
+        getCommand("leaderboard").setExecutor(new StatsCommand(this));
+        
+        // Chat Commands
+        ChatCommand chatCommand = new ChatCommand(this);
+        getCommand("mute").setExecutor(chatCommand);
+        getCommand("unmute").setExecutor(chatCommand);
+        getCommand("clearchat").setExecutor(chatCommand);
+        getCommand("mutechat").setExecutor(chatCommand);
+        
+        // Enhanced Admin Commands
+        EnhancedAdminCommand adminCommand = new EnhancedAdminCommand(this);
+        getCommand("adminpanel").setExecutor(adminCommand);
+        getCommand("god").setExecutor(adminCommand);
+        getCommand("godmode").setExecutor(adminCommand);
+        getCommand("vanish").setExecutor(adminCommand);
+        getCommand("heal").setExecutor(adminCommand);
+        getCommand("feed").setExecutor(adminCommand);
+        getCommand("gamemode").setExecutor(adminCommand);
+        getCommand("teleport").setExecutor(adminCommand);
+        getCommand("backup").setExecutor(adminCommand);
+        
         // Admin Commands
         getCommand("survivalcore").setExecutor(new AdminCommand(this));
     }
     
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        getServer().getPluginManager().registerEvents(new KitListener(this), this);
+        getServer().getPluginManager().registerEvents(new StatsListener(this), this);
+        getServer().getPluginManager().registerEvents(new AdminToolsListener(this), this);
     }
     
     public void reloadPlugin() {
@@ -189,5 +232,25 @@ public class SurvivalCore extends JavaPlugin {
     
     public ShopManager getShopManager() {
         return shopManager;
+    }
+    
+    public KitManager getKitManager() {
+        return kitManager;
+    }
+    
+    public StatsManager getStatsManager() {
+        return statsManager;
+    }
+    
+    public ChatManager getChatManager() {
+        return chatManager;
+    }
+    
+    public AdminToolsManager getAdminToolsManager() {
+        return adminToolsManager;
+    }
+    
+    public long getServerStartTime() {
+        return serverStartTime;
     }
 }

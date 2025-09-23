@@ -50,6 +50,52 @@ A comprehensive Minecraft Spigot plugin designed for survival servers, created b
 - Navigation controls (previous/next page, close)
 - Economic integration support (Vault compatible)
 
+### 🎁 Kit System
+- Configurable starter kits with customizable items
+- Permission-based kit access control
+- Cooldown system with bypass permissions
+- One-time and repeatable kits
+- Cost-based kits (requires economy integration)
+- GUI-based kit selection interface
+- Multiple predefined kits: Starter, Daily, VIP, PvP, Builder
+- Database tracking for one-time kit claims
+- Fully customizable kit configurations
+
+### 📊 Player Statistics & Leaderboards
+- Comprehensive player activity tracking
+- Statistics include: time played, blocks placed/broken, mobs killed, deaths, PvP kills, distance traveled, items crafted, fish caught
+- GUI-based statistics viewer with detailed breakdowns
+- Server-wide leaderboards for all stat categories
+- Automatic data collection and periodic saving
+- Player ranking system with visual displays
+- Historical data preservation across sessions
+
+### 💬 Advanced Chat Management
+- Comprehensive chat moderation and formatting system
+- Anti-spam protection with message cooldowns and repeat detection
+- Profanity filter with customizable word list and replacement
+- URL blocking to prevent unwanted links
+- Caps filter to prevent excessive capital letters
+- Player muting system with staff commands
+- Global chat toggle for server-wide chat control
+- Chat clearing functionality for moderators
+- Permission-based chat formatting with group support
+- Color code support for privileged players
+- Configurable chat formats per permission group
+
+### 🛠️ Enhanced Admin Tools
+- Comprehensive admin control panel with GUI interface
+- Player management with teleportation and monitoring
+- God mode with damage immunity for administrators
+- Vanish mode with selective visibility controls
+- Instant heal and feed commands for player management
+- Gamemode switching with permission controls
+- Advanced teleportation system (players and coordinates)
+- Server backup system with automated scheduling
+- Real-time server statistics (TPS, RAM, uptime, player count)
+- World management and monitoring
+- Plugin status overview and management
+
 ## Configuration
 
 ### Main Config (`config.yml`)
@@ -70,6 +116,12 @@ A comprehensive Minecraft Spigot plugin designed for survival servers, created b
 - Category organization
 - GUI customization
 
+### Kit Config (`kits.yml`)
+- Configurable kits with items, permissions, cooldowns
+- Support for one-time and repeatable kits
+- Cost-based kits for economy integration
+- Predefined starter, VIP, PvP, and builder kits
+
 ## Permissions
 
 The plugin includes a comprehensive permission system with granular control:
@@ -81,6 +133,10 @@ The plugin includes a comprehensive permission system with granular control:
 - `survivalcore.warp.*` - All warp permissions
 - `survivalcore.pwarp.*` - All player warp permissions
 - `survivalcore.shop.*` - All shop permissions
+- `survivalcore.kit.*` - All kit permissions
+- `survivalcore.stats.*` - All statistics permissions
+- `survivalcore.chat.*` - All chat management permissions
+- `survivalcore.admin.*` - All administrative permissions
 - `survivalcore.bypass.cooldown` - Bypass all cooldowns
 
 ## Database Support
@@ -121,6 +177,30 @@ The plugin includes a comprehensive permission system with granular control:
 
 ### Shop Commands
 - `/shop [category]` - Open shop
+
+### Kit Commands
+- `/kit [name]` - Claim a kit or open kit GUI
+- `/kits` - List all available kits
+
+### Statistics Commands
+- `/stats [player]` - View player statistics
+- `/leaderboard [category]` - View server leaderboards
+
+### Chat Management Commands
+- `/mute <player>` - Mute a player from chat
+- `/unmute <player>` - Unmute a player from chat
+- `/clearchat` - Clear chat for all players
+- `/mutechat` - Toggle server-wide chat
+
+### Admin Tools Commands
+- `/adminpanel` - Open admin control panel GUI
+- `/god [player]` - Toggle god mode (damage immunity)
+- `/vanish` - Toggle invisibility mode
+- `/heal [player]` - Heal yourself or another player
+- `/feed [player]` - Feed yourself or another player
+- `/gamemode <mode> [player]` - Change gamemode
+- `/teleport <player|x y z>` - Teleport to player or coordinates
+- `/backup [name]` - Create server backup
 
 ### Admin Commands
 - `/survivalcore <reload|info>` - Plugin management

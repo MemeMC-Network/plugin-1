@@ -146,6 +146,14 @@ public class ConfigManager {
         return config.getBoolean("shop.enabled", true);
     }
     
+    public boolean isKitEnabled() {
+        return config.getBoolean("kits.enabled", true);
+    }
+    
+    public boolean isStatsEnabled() {
+        return config.getBoolean("stats.enabled", true);
+    }
+    
     public String getDatabaseType() {
         return config.getString("database.type", "sqlite");
     }

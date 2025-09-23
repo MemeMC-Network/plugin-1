@@ -116,6 +116,100 @@ commands:
     usage: /shop [category]
     permission: survivalcore.shop.use
   
+  # Kit Commands
+  kit:
+    description: Claim or view available kits
+    usage: /kit [name]
+    aliases: [kits]
+    permission: survivalcore.kit.use
+  
+  kits:
+    description: List all available kits
+    usage: /kits
+    permission: survivalcore.kit.list
+  
+  # Stats Commands
+  stats:
+    description: View player statistics
+    usage: /stats [player]
+    aliases: [statistics]
+    permission: survivalcore.stats.view
+  
+  leaderboard:
+    description: View server leaderboards
+    usage: /leaderboard [category]
+    aliases: [lb, top]
+    permission: survivalcore.stats.leaderboard
+  
+  # Chat Management Commands
+  mute:
+    description: Mute a player from chat
+    usage: /mute <player>
+    permission: survivalcore.chat.mute
+  
+  unmute:
+    description: Unmute a player from chat
+    usage: /unmute <player>
+    permission: survivalcore.chat.unmute
+  
+  clearchat:
+    description: Clear the chat for all players
+    usage: /clearchat
+    aliases: [cc]
+    permission: survivalcore.chat.clear
+  
+  mutechat:
+    description: Toggle chat for the entire server
+    usage: /mutechat
+    aliases: [togglechat]
+    permission: survivalcore.chat.toggle
+  
+  # Enhanced Admin Commands
+  adminpanel:
+    description: Open the admin control panel
+    usage: /adminpanel
+    aliases: [apanel]
+    permission: survivalcore.admin.panel
+  
+  god:
+    description: Toggle god mode
+    usage: /god [player]
+    aliases: [godmode]
+    permission: survivalcore.admin.god
+  
+  vanish:
+    description: Toggle vanish mode
+    usage: /vanish
+    aliases: [v]
+    permission: survivalcore.admin.vanish
+  
+  heal:
+    description: Heal yourself or another player
+    usage: /heal [player]
+    permission: survivalcore.admin.heal
+  
+  feed:
+    description: Feed yourself or another player
+    usage: /feed [player]
+    permission: survivalcore.admin.feed
+  
+  gamemode:
+    description: Change gamemode
+    usage: /gamemode <mode> [player]
+    aliases: [gm]
+    permission: survivalcore.admin.gamemode
+  
+  teleport:
+    description: Teleport to player or coordinates
+    usage: /teleport <player|x y z>
+    aliases: [tp]
+    permission: survivalcore.admin.teleport
+  
+  backup:
+    description: Create a server backup
+    usage: /backup [name]
+    permission: survivalcore.admin.backup
+  
   # Admin Commands
   survivalcore:
     description: Main plugin command
@@ -134,6 +228,9 @@ permissions:
       survivalcore.warp.*: true
       survivalcore.pwarp.*: true
       survivalcore.shop.*: true
+      survivalcore.kit.*: true
+      survivalcore.stats.*: true
+      survivalcore.chat.*: true
   
   survivalcore.admin:
     description: Administrative permissions
@@ -143,6 +240,15 @@ permissions:
       survivalcore.bypass.cooldown: true
       survivalcore.warp.set: true
       survivalcore.warp.delete: true
+      survivalcore.admin.panel: true
+      survivalcore.admin.god: true
+      survivalcore.admin.vanish: true
+      survivalcore.admin.heal: true
+      survivalcore.admin.feed: true
+      survivalcore.admin.gamemode: true
+      survivalcore.admin.teleport: true
+      survivalcore.admin.backup: true
+      survivalcore.admin.see-vanished: true
   
   survivalcore.rtp.*:
     description: All RTP permissions
@@ -277,3 +383,145 @@ permissions:
   survivalcore.shop.sell:
     description: Allows selling to the shop
     default: true
+  
+  survivalcore.kit.*:
+    description: All kit permissions
+    children:
+      survivalcore.kit.use: true
+      survivalcore.kit.list: true
+      survivalcore.kit.gui: true
+      survivalcore.kit.reload: true
+  
+  survivalcore.kit.use:
+    description: Allows claiming kits
+    default: true
+  
+  survivalcore.kit.list:
+    description: Allows listing available kits
+    default: true
+  
+  survivalcore.kit.gui:
+    description: Allows using kit GUI interface
+    default: true
+  
+  survivalcore.kit.reload:
+    description: Allows reloading kit configuration
+    default: op
+  
+  survivalcore.stats.*:
+    description: All statistics permissions
+    children:
+      survivalcore.stats.view: true
+      survivalcore.stats.others: true
+      survivalcore.stats.leaderboard: true
+  
+  survivalcore.stats.view:
+    description: Allows viewing own statistics
+    default: true
+  
+  survivalcore.stats.others:
+    description: Allows viewing other players' statistics
+    default: true
+  
+  survivalcore.stats.leaderboard:
+    description: Allows viewing leaderboards
+    default: true
+  
+  survivalcore.chat.*:
+    description: All chat permissions
+    children:
+      survivalcore.chat.color: true
+      survivalcore.chat.mute: true
+      survivalcore.chat.unmute: true
+      survivalcore.chat.clear: true
+      survivalcore.chat.toggle: true
+      survivalcore.chat.bypass.cooldown: true
+      survivalcore.chat.bypass.spam: true
+      survivalcore.chat.bypass.filter: true
+      survivalcore.chat.bypass.urls: true
+      survivalcore.chat.bypass.caps: true
+      survivalcore.chat.bypass.mute: true
+  
+  survivalcore.chat.color:
+    description: Allows using color codes in chat
+    default: false
+  
+  survivalcore.chat.mute:
+    description: Allows muting players
+    default: op
+  
+  survivalcore.chat.unmute:
+    description: Allows unmuting players
+    default: op
+  
+  survivalcore.chat.clear:
+    description: Allows clearing chat
+    default: op
+  
+  survivalcore.chat.toggle:
+    description: Allows toggling server chat
+    default: op
+  
+  survivalcore.chat.bypass.cooldown:
+    description: Bypass chat cooldown
+    default: op
+  
+  survivalcore.chat.bypass.spam:
+    description: Bypass anti-spam protection
+    default: op
+  
+  survivalcore.chat.bypass.filter:
+    description: Bypass profanity filter
+    default: op
+  
+  survivalcore.chat.bypass.urls:
+    description: Bypass URL blocking
+    default: op
+  
+  survivalcore.chat.bypass.caps:
+    description: Bypass caps filter
+    default: op
+  
+  survivalcore.chat.bypass.mute:
+    description: Cannot be muted
+    default: op
+  
+  survivalcore.admin.panel:
+    description: Allows opening admin panel
+    default: op
+  
+  survivalcore.admin.god:
+    description: Allows using god mode
+    default: op
+  
+  survivalcore.admin.god.others:
+    description: Allows toggling god mode for other players
+    default: op
+  
+  survivalcore.admin.vanish:
+    description: Allows using vanish mode
+    default: op
+  
+  survivalcore.admin.see-vanished:
+    description: Allows seeing vanished players
+    default: op
+  
+  survivalcore.admin.heal:
+    description: Allows healing players
+    default: op
+  
+  survivalcore.admin.feed:
+    description: Allows feeding players
+    default: op
+  
+  survivalcore.admin.gamemode:
+    description: Allows changing gamemode
+    default: op
+  
+  survivalcore.admin.teleport:
+    description: Allows teleporting
+    default: op
+  
+  survivalcore.admin.backup:
+    description: Allows creating backups
+    default: op
