@@ -118,6 +118,16 @@ kits:
   # Show kit preview before claiming
   show-preview: true
 
+# Statistics System Settings
+stats:
+  enabled: true
+  # Track player movement for distance statistics
+  track-movement: true
+  # Minimum distance to count for movement tracking
+  min-move-distance: 1.0
+  # Auto-save interval in minutes
+  save-interval: 5
+
 # General Settings
 general:
   # Check for updates on startup

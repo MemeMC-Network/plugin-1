@@ -3,6 +3,7 @@ package me.mememc.network.survivalcore;
 import me.mememc.network.survivalcore.commands.*;
 import me.mememc.network.survivalcore.listeners.KitListener;
 import me.mememc.network.survivalcore.listeners.PlayerListener;
+import me.mememc.network.survivalcore.listeners.StatsListener;
 import me.mememc.network.survivalcore.managers.*;
 import me.mememc.network.survivalcore.utils.ConfigManager;
 import me.mememc.network.survivalcore.utils.DatabaseManager;
@@ -37,6 +38,7 @@ public class SurvivalCore extends JavaPlugin {
     private PlayerWarpManager playerWarpManager;
     private ShopManager shopManager;
     private KitManager kitManager;
+    private StatsManager statsManager;
     
     @Override
     public void onEnable() {
@@ -56,6 +58,7 @@ public class SurvivalCore extends JavaPlugin {
             this.playerWarpManager = new PlayerWarpManager(this);
             this.shopManager = new ShopManager(this);
             this.kitManager = new KitManager(this);
+            this.statsManager = new StatsManager(this);
             
             // Initialize database
             if (!databaseManager.initialize()) {
@@ -143,6 +146,10 @@ public class SurvivalCore extends JavaPlugin {
         getCommand("kit").setExecutor(new KitCommand(this));
         getCommand("kits").setExecutor(new KitCommand(this));
         
+        // Stats Commands
+        getCommand("stats").setExecutor(new StatsCommand(this));
+        getCommand("leaderboard").setExecutor(new StatsCommand(this));
+        
         // Admin Commands
         getCommand("survivalcore").setExecutor(new AdminCommand(this));
     }
@@ -150,6 +157,7 @@ public class SurvivalCore extends JavaPlugin {
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new KitListener(this), this);
+        getServer().getPluginManager().registerEvents(new StatsListener(this), this);
     }
     
     public void reloadPlugin() {
@@ -201,5 +209,9 @@ public class SurvivalCore extends JavaPlugin {
     
     public KitManager getKitManager() {
         return kitManager;
+    }
+    
+    public StatsManager getStatsManager() {
+        return statsManager;
     }
 }

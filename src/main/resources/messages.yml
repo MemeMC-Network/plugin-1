@@ -114,3 +114,8 @@ kit:
   list-item: "&7- &e{kit}&7: {description}{status}"
   list-footer: "&7Use &e/kit <name> &7to claim a kit"
   reloaded: "{prefix}&aKits reloaded successfully!"
+
+# Statistics Messages
+stats:
+  not-found: "{prefix}&cNo statistics found for that player!"
+  invalid-category: "{prefix}&cInvalid category! Available: playtime, blocks, broken, kills, pvp, deaths, travel, crafted, fish"

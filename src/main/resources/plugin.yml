@@ -128,6 +128,19 @@ commands:
     usage: /kits
     permission: survivalcore.kit.list
   
+  # Stats Commands
+  stats:
+    description: View player statistics
+    usage: /stats [player]
+    aliases: [statistics]
+    permission: survivalcore.stats.view
+  
+  leaderboard:
+    description: View server leaderboards
+    usage: /leaderboard [category]
+    aliases: [lb, top]
+    permission: survivalcore.stats.leaderboard
+  
   # Admin Commands
   survivalcore:
     description: Main plugin command
@@ -147,6 +160,7 @@ permissions:
       survivalcore.pwarp.*: true
       survivalcore.shop.*: true
       survivalcore.kit.*: true
+      survivalcore.stats.*: true
   
   survivalcore.admin:
     description: Administrative permissions
@@ -314,3 +328,22 @@ permissions:
   survivalcore.kit.reload:
     description: Allows reloading kit configuration
     default: op
+  
+  survivalcore.stats.*:
+    description: All statistics permissions
+    children:
+      survivalcore.stats.view: true
+      survivalcore.stats.others: true
+      survivalcore.stats.leaderboard: true
+  
+  survivalcore.stats.view:
+    description: Allows viewing own statistics
+    default: true
+  
+  survivalcore.stats.others:
+    description: Allows viewing other players' statistics
+    default: true
+  
+  survivalcore.stats.leaderboard:
+    description: Allows viewing leaderboards
+    default: true

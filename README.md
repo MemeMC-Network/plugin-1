@@ -50,6 +50,26 @@ A comprehensive Minecraft Spigot plugin designed for survival servers, created b
 - Navigation controls (previous/next page, close)
 - Economic integration support (Vault compatible)
 
+### 🎁 Kit System
+- Configurable starter kits with customizable items
+- Permission-based kit access control
+- Cooldown system with bypass permissions
+- One-time and repeatable kits
+- Cost-based kits (requires economy integration)
+- GUI-based kit selection interface
+- Multiple predefined kits: Starter, Daily, VIP, PvP, Builder
+- Database tracking for one-time kit claims
+- Fully customizable kit configurations
+
+### 📊 Player Statistics & Leaderboards
+- Comprehensive player activity tracking
+- Statistics include: time played, blocks placed/broken, mobs killed, deaths, PvP kills, distance traveled, items crafted, fish caught
+- GUI-based statistics viewer with detailed breakdowns
+- Server-wide leaderboards for all stat categories
+- Automatic data collection and periodic saving
+- Player ranking system with visual displays
+- Historical data preservation across sessions
+
 ## Configuration
 
 ### Main Config (`config.yml`)
@@ -70,6 +90,12 @@ A comprehensive Minecraft Spigot plugin designed for survival servers, created b
 - Category organization
 - GUI customization
 
+### Kit Config (`kits.yml`)
+- Configurable kits with items, permissions, cooldowns
+- Support for one-time and repeatable kits
+- Cost-based kits for economy integration
+- Predefined starter, VIP, PvP, and builder kits
+
 ## Permissions
 
 The plugin includes a comprehensive permission system with granular control:
@@ -81,6 +107,8 @@ The plugin includes a comprehensive permission system with granular control:
 - `survivalcore.warp.*` - All warp permissions
 - `survivalcore.pwarp.*` - All player warp permissions
 - `survivalcore.shop.*` - All shop permissions
+- `survivalcore.kit.*` - All kit permissions
+- `survivalcore.stats.*` - All statistics permissions
 - `survivalcore.bypass.cooldown` - Bypass all cooldowns
 
 ## Database Support
@@ -121,6 +149,14 @@ The plugin includes a comprehensive permission system with granular control:
 
 ### Shop Commands
 - `/shop [category]` - Open shop
+
+### Kit Commands
+- `/kit [name]` - Claim a kit or open kit GUI
+- `/kits` - List all available kits
+
+### Statistics Commands
+- `/stats [player]` - View player statistics
+- `/leaderboard [category]` - View server leaderboards
 
 ### Admin Commands
 - `/survivalcore <reload|info>` - Plugin management
